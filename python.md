@@ -442,7 +442,15 @@ match choice.upper():
 
 ### while-loop (no do while)
 
+* continue and break
+
 ### for-loop
+
+~~~python
+for i in range(5):
+    print(i)
+~~~
+
 
 
 
@@ -548,9 +556,26 @@ public class ListOfNumbersDemo {
 
 ### Slicing
 
+~~~python
+l = [0,1,2,3,4]
+print(l[1:])
+print(l[1:3])
+print(l[:3])
+print(l[1:-1])
+print(l[:-1])
+~~~
+
+### Concatenating lists
+
+~~~python
+print([0,1,2,3,4] + [5,6,7])
+~~~
+
 ### Enumerate
 
 ~~~python
+punten = [15,16,8,9]
+
 for i, punt in enumerate(punten):
   print(f'student {i} heeft {punt} punten')
 ~~~
@@ -659,17 +684,40 @@ for student in students:
 
 
 ~~~python
-list(filter(lambda x: x > 4, map(lambda x: x * 2, l)))
+l = [1,2,3,4,5,6,7,8]
+print(list(map(lambda x: x * 2, l)))
 ~~~
 
 ~~~python
+l = [1,2,3,4,5,6,7,8]
 print([x for x in l if x > 4 ])
+~~~
+
+~~~python
+data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+column = [row[1] for row in data]
+print(column) # output: [2, 5, 8]
+~~~ 
+
+~~~python
+l = [1,2,3,4,5,6,7,8]
+print(list(filter(lambda x: x > 4, map(lambda x: x * 2, l))))
+~~~
+
+~~~python
+data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+column = [row[1] for row in data]
+print(column) # output: [2, 5, 8]
 ~~~
 
 ~~~python
 from functools import reduce
 
 reduce(lambda x,y: x + y,filter(lambda x: x > 4, map(lambda x: x * 2, l)))
+~~~
+
+~~~python
+print(sum(filter(lambda x: x > 4, map(lambda x: x * 2, l))))
 ~~~
 
 ~~~python
