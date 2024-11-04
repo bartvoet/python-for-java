@@ -14,75 +14,90 @@ https://stackoverflow.com/questions/63667488/is-there-assignment-expression-for-
 
 vs walrus operator
 
-## Level 1
 
-### Hello World
+## Getting started with a "Hello World"
 
-~~~python
-class HelloWorld {
+### Let's start with Java...
+
+We start of at the classic "Hello, World!" in **Java**.  
+Basically you store the underlying snippet (bypassing packages for simplicity) in a file Hello.Java...
+
+~~~java
+public class Hello {
     public static void main(String[] args) {
         System.out.println("Hello, World!"); 
     }
 }
 ~~~
 
+...and after this you can run - the main-function - a Java-program.  
+Without the help of an IDE or Gradle/Maven this is performed in 2 steps:
+
+~~~bash
+$ javac Hello.java
+$ ls
+Hello.class  Hello.java 
+$ java Hello
+Hello World!
+$
+~~~
+
+### And now in Python...
+
+In **Python** you **write** this as a **one-liner**
 
 ~~~python
-print("hello world")
+print("Hello, World!")
 ~~~
 
-* You can **run** a main without defining a class
-* The equivalent of **System.out.println** in Python is the built-in **print**-functoin
-* The syntax in calling functions is similar to how you invoke them in java Java
-* No semicolon `;` required
+Python-scripts are stored in files with py as extension.  
+Let's store the snippet in file hello.py and run it.
 
-### Variables
+As it was with **writing**, **running** a Python-script is also **one-liner**
 
-Let's add a variable
-
-~~~java
-class HelloWorld {
-    public static void main(String[] args) {
-        String message = "Hello, World!";
-        System.out.println(message); 
-    }
-}
+~~~bash
+$ python3 hello.python
+Hello World!
+$
 ~~~
 
-In python you can define a variable just as in Java but you
-don't need to declare a type neither do you need to use a var-keyword
+> Note: Depending on the system and how you've installed the python-interpreter can be referenced with python, python3 or py.  
+> The examples in this case are tested on a Linux-distro where you most commonly refer "Python 3" with python3.
+
+### Some first observations
+
+#### Python is a scripting-language in nature
+
+Obviously Python is a scripting language, you can run the code in place without intermediate build phases
+
+Just like other scripting language you just write the script and feed it directly to the interpreter.
+
+#### Python is a hybrid language
+
+You can **run** command line-programming without defining a class without defining a main-function (like in other languages like Java, C, C++, ...).  
+
+Python - as you will see later - has quite good support for both OOP and FOP but scales perfectly to basic procedural scripting-style.
+
+Also you don't need to use an class-system to use a simple print-function.  
+The print-function is a first class member and directly accessible (without static import)
+
+#### Buy buy semicolon";"
+
+No semicolons are required.  
+Simple statements can be distinguished from each other by new lines
 
 ~~~python
-message = "Hello World"
-print(message)
+print("Hello, World!")
+print("Greetings from Python")
 ~~~
 
-### Dynamic typing
+#### Similarities in java
 
-You might think the type of the handle is inferred like it
-is with the var-keyword but that's not really the case
+The syntax in calling functions is similar to how you invoke them in java Java.
 
-~~~java
-class HelloWorld {
-    public static void main(String[] args) {
-        var message = "Hello, World!";
-        System.out.println(message); 
-    }
-}
-~~~
+## Comments
 
-Where in Python a handle is actually containing some type-information 
-(interface or class that the actual heap-object is implementing) in 
-Python this is just a simple label (name) and a pointer to the object
 
-~~~python
-message = "Hello World"
-print(message)
-message = 1 + 3
-print(message)
-~~~
-
-### Comments
 
 ~~~java
 // One line comment
@@ -108,7 +123,171 @@ over here
 '''
 ~~~
 
-### Format string
+
+
+## Variables and (primitive) types
+
+A big difference between Java and Python is the way on how variables are defined and used.
+
+Let's start with storing our message in a variable
+
+~~~java
+class Hello {
+    public static void main(String[] args) {
+        String message = "Hello, World!";
+        System.out.println(message); 
+    }
+}
+~~~
+
+In Python you can **define** a **variable** just as in Java but you
+**don't need** to **declare** a **type** neither do you need to use a var-keyword (in the case of type inference)
+
+~~~python
+message = "Hello World"
+print(message)
+~~~
+
+## Dynamic typing
+
+You might think the type of the handle is inferred like it
+is with the var-keyword but that's not really the case
+
+~~~java
+class HelloWorld {
+    public static void main(String[] args) {
+        var message = "Hello, World!";
+        System.out.println(message); 
+    }
+}
+~~~
+
+In **Java** a **handle** is actually **containing** some type-information on the heap-object it's referring (e.g.g interface or class that the actual heap-object is implementing) in 
+Python this is just a simple label (name) and a pointer to the object
+
+~~~python
+message = "Hello World"
+print(message)
+message = 1 + 3
+print(message)
+~~~
+
+## Datatypes
+
+Python has a relative simple type-system compared to Java.
+
+~~~python
+a = "hello"
+print(type(a))
+a = 1
+print(type(a))
+a = True
+print(type(a))
+a = 5.5
+print(type(a))
+a = 1 + 2j
+print(type(a))
+~~~
+
+~~~
+<class 'str'>
+<class 'int'>
+<class 'bool'>
+<class 'float'>
+<class 'complex'>  
+~~~
+
+### Integers
+
+#### Only integer
+
+No short, long or other 
+
+Arbitrary precision
+
+~~~python
+b = 1000000000000000000000000000000000000000000000000000000
+~~~
+
+
+~~~java
+int b = 1000000000000000000000000000000000000000000000000000000
+~~~
+
+
+#### Integer division
+
+~~~python
+print(5 // 2) # 2
+print(5 / 2) # 2.5
+~~~
+
+
+
+
+### Explicit global
+
+~~~python
+a = 5
+
+def change_a(b):
+    a = b
+    print(a)
+
+change_a(10)
+
+print(a)
+~~~
+
+~~~python
+a = 5
+
+def change_a(b):
+    global a
+    a = b
+    print(a)
+
+change_a(10)
+
+print(a)
+~~~
+
+## Operations
+
+Het **overzicht** van deze **rekenkundige operatoren** vindt je hier onder:
+
+| Operator   |   Meaning            |
+|------------|----------------------|
+| +          | addition             |
+| -          | substraction         |
+| *          | multiplication       |
+| /          | floor-division       |
+| //         | true-division        |
+| %          | remainder            |
+| **         | power                |
+
+~~~python
+x = 10.5
+y = -3
+
+print("x + y =", x + y)                  # addition
+print("x - y =", x - y)                  # subtraction
+print("x * y =", x * y)                  # multiplication
+
+print("x / y =", x / y)                  # normal division
+print("x // y =", x // y)                # integer division
+print("x % y =", x % y)                  # modulo
+
+print("abs(y) =", abs(y))
+print("int(x) =", int(x))                # convert to integer
+print("float(y) =", float(y))            # convert to float
+print("complex(x, y) =", complex(x, y))  # convert to complex
+
+print("pow(x, 3) =", pow(x, 3))          # exponentiation
+print("x ** 3 =", x ** 3)                # exponentiation (alternative syntax)
+~~~
+
+## Format string
 
 ~~~python
 pi = 3.14159265359
@@ -128,7 +307,7 @@ ratio = 0.25
 print(f"{ratio:.1%}")  # percentage
 ~~~
 
-### Input and output
+## Input and output
 
 ~~~python
 name = input("Give name please")
@@ -157,7 +336,7 @@ with open(filename, "r") as f:
         print(line)
 ~~~
 
-### Function
+## Function
 
 Let's start with a simple static functions 
 
@@ -274,118 +453,6 @@ def add(x:int, y:int = 1) -> int:
 message = "Hello World"
 print_message(message)
 print(add(5))
-~~~
-
-## Datatypes
-
-~~~python
-a = "hello"
-print(type(a))
-a = 1
-print(type(a))
-a = True
-print(type(a))
-a = 5.5
-print(type(a))
-a = 1 + 2j
-print(type(a))
-~~~
-
-~~~
-<class 'str'>
-<class 'int'>
-<class 'bool'>
-<class 'float'>
-<class 'complex'>  
-~~~
-
-
-### Integer division
-
-~~~python
-print(5 // 2) # 2
-print(5 / 2) # 2.5
-~~~
-
-
-### Only integer
-
-No short, long, double
-
-Arbitrary precision
-
-~~~python
-b = 1000000000000000000000000000000000000000000000000000000
-~~~
-
-
-~~~java
-int b = 1000000000000000000000000000000000000000000000000000000
-~~~
-
-
-### Explicit global
-
-~~~python
-a = 5
-
-def change_a(b):
-    a = b
-    print(a)
-
-change_a(10)
-
-print(a)
-~~~
-
-~~~python
-a = 5
-
-def change_a(b):
-    global a
-    a = b
-    print(a)
-
-change_a(10)
-
-print(a)
-~~~
-
-
-### Operations
-
-
-Het **overzicht** van deze **rekenkundige operatoren** vindt je hier onder:
-
-| Operator   |   Meaning            |
-|------------|----------------------|
-| +          | addition             |
-| -          | substraction         |
-| *          | multiplication       |
-| /          | floor-division       |
-| //         | true-division        |
-| %          | remainder            |
-| **         | power                |
-
-~~~python
-x = 10.5
-y = -3
-
-print("x + y =", x + y)                  # addition
-print("x - y =", x - y)                  # subtraction
-print("x * y =", x * y)                  # multiplication
-
-print("x / y =", x / y)                  # normal division
-print("x // y =", x // y)                # integer division
-print("x % y =", x % y)                  # modulo
-
-print("abs(y) =", abs(y))
-print("int(x) =", int(x))                # convert to integer
-print("float(y) =", float(y))            # convert to float
-print("complex(x, y) =", complex(x, y))  # convert to complex
-
-print("pow(x, 3) =", pow(x, 3))          # exponentiation
-print("x ** 3 =", x ** 3)                # exponentiation (alternative syntax)
 ~~~
 
 ## Control
