@@ -97,8 +97,11 @@ The syntax in calling functions is similar to how you invoke them in java Java.
 
 ## Comments
 
+In java we distinguish 2 types of comments (beside Javadoc):
 
-
+* One line comments starting with slashes
+* 2 line comments starting with 
+  
 ~~~java
 // One line comment
 class HelloWorld {
@@ -112,6 +115,7 @@ Multiline comment
 */
 ~~~
 
+In Python one-line-comments are marked as indicated below
 
 ~~~python
 # One line comment
@@ -123,11 +127,11 @@ over here
 '''
 ~~~
 
-
-
-## Variables and (primitive) types
+## Variables and dynamic typing
 
 A big difference between Java and Python is the way on how variables are defined and used.
+
+### Variables in Python vs Java
 
 Let's start with storing our message in a variable
 
@@ -148,7 +152,7 @@ message = "Hello World"
 print(message)
 ~~~
 
-## Dynamic typing
+## Handles are dynamicly typed
 
 You might think the type of the handle is inferred like it
 is with the var-keyword but that's not really the case
@@ -172,9 +176,20 @@ message = 1 + 3
 print(message)
 ~~~
 
-## Datatypes
+## Primitive datatypes
 
 Python has a relative simple type-system compared to Java.
+The 5 primitive data structures are:
+
+* Integers
+* Floats
+* Strings
+* Booleans 
+
+### type-operator
+
+Python has a built-in function (actually an operator) allowing 
+you to identify the type.  
 
 ~~~python
 a = "hello"
@@ -189,6 +204,8 @@ a = 1 + 2j
 print(type(a))
 ~~~
 
+If you run this you would see
+
 ~~~
 <class 'str'>
 <class 'int'>
@@ -197,64 +214,50 @@ print(type(a))
 <class 'complex'>  
 ~~~
 
-### Integers
+> Interestingly enough it indicates the class keyword
+> everything in Python in actually an object stored on the heap
+> in contrast to Java that keeps it's primitives on the stack
+> (when these are not attributes)
 
-#### Only integer
+### Numbers
 
-No short, long or other 
+#### Floating point
 
-Arbitrary precision
+**Java** contains **double (64-bit) and float (32-bit)** depending on the size you need.  
+**Python** on the other hand has only one integer type **double**
 
-~~~python
-b = 1000000000000000000000000000000000000000000000000000000
-~~~
-
+Both Java and Python use floating point for theire decimal numbers...
 
 ~~~java
-int b = 1000000000000000000000000000000000000000000000000000000
-~~~
-
-
-#### Integer division
-
-~~~python
-print(5 // 2) # 2
-print(5 / 2) # 2.5
-~~~
-
-
-
-
-### Explicit global
-
-~~~python
-a = 5
-
-def change_a(b):
-    a = b
-    print(a)
-
-change_a(10)
-
-print(a)
+public class DoubleTest {
+    public static void main(String[] args) {
+        System.out.println(0.2 + 0.1); 
+    }
+}
 ~~~
 
 ~~~python
-a = 5
-
-def change_a(b):
-    global a
-    a = b
-    print(a)
-
-change_a(10)
-
-print(a)
+print(0.2 + 0.1)
 ~~~
 
-## Operations
+...as illustrated hereunder in the execution
 
-Het **overzicht** van deze **rekenkundige operatoren** vindt je hier onder:
+~~~bash
+$ python double_test.py
+0.30000000000000004
+$ javac DoubleTest
+0.30000000000000004
+~~~
+
+#### Integers
+
+**Java** contains **byte, short, int or long** depending on the size you need.  
+**Python** on the other hand has only one integer type **int**
+
+#### Operations
+
+All types suport the following arithmetic operators identical to Java with
+the **exception** of the **true-division** and **power-operator**
 
 | Operator   |   Meaning            |
 |------------|----------------------|
@@ -287,7 +290,111 @@ print("pow(x, 3) =", pow(x, 3))          # exponentiation
 print("x ** 3 =", x ** 3)                # exponentiation (alternative syntax)
 ~~~
 
-## Format string
+#### Arbitrary precision integers
+
+Where each type in Java has a specific length in python the precision is arbitrary.  
+An integer is not limited by a number of bytes but is backed internally by a buffer.
+
+If you e.g. define a very large number
+
+~~~python
+b = 1000000000000000000000000000000000000000000000000000000000000
+c = b + 111
+print(c)
+print(c * b)
+~~~
+
+If you would run this it will execute without error
+
+~~~
+1000000000000000000000000000000000000000000000000000000000111
+1000000000000000000000000000000000000000000000000000000000111000000000000000000000000000000000000000000000000000000000000
+~~~
+
+In Java this would be blocked by the compiler
+
+~~~java
+public class Hello {
+    public static void main(String[] args) {
+        int b = 1000000000000000000000000000000000000000000000000000000;
+        String message = "Hello, World!";
+        System.out.println(message); 
+    }
+}
+~~~
+
+When you would build the following class
+
+~~~bash
+$ javac Hello.java
+Hello.java:3: error: integer number too large
+        int b = 1000000000000000000000000000000000000000000000000000000;
+                ^
+1 error
+$
+~~~
+
+> In Java you would use a BigInteger for these kind of scenario's
+
+#### No increment operator
+
+In most C-like languages (as Java is) the increment en decrement-operators are supported.  
+
+~~~java
+public class Hello {
+    public static void main(String[] args) {
+        int i = 1;
+        System.out.println(i++); 
+        System.out.println(++i); 
+    }
+}
+~~~
+
+Python however does not have such a special syntax.  
+To increment x by 1 you have to write 
+
+~~~python
+i += 1 
+i = x + 1 .
+~~~
+
+This is partly due to the fact that Python is not supporting the typical
+for-loops we know from Java as we will see a little bit further.
+
+
+#### True division operator
+
+When dividing 2 integers in Java the result is a rounded integer
+
+~~~java
+class Hello {
+    public static void main(String[] args) {
+        System.out.println(5 / 2); 
+    }
+}
+~~~
+
+If you want an floating-point result you need an explicit cast on one of both integers.
+
+~~~java
+class Hello {
+    public static void main(String[] args) {
+        System.out.println((double)5 / 2); 
+    }
+}
+~~~
+
+In Python however there are 2 operators
+
+
+~~~python
+print(5 // 2) # 2
+print(5 / 2) # 2.5
+~~~
+
+### Strings
+
+#### Format string (f-strings)
 
 ~~~python
 pi = 3.14159265359
@@ -336,9 +443,187 @@ with open(filename, "r") as f:
         print(line)
 ~~~
 
+## Code blocks: Java vs Python (buy buy braces)
+
+Up till now we only demonstrated sequential code, this is code
+without any conditions or repetitions.
+
+Now we will start of complex statements with a basic if-statement
+as we know this from Java:
+
+~~~java
+public class CodeBlockDemo {
+    public static void main(String[] args) {
+        int i = 5;
+        if (i > 0) {
+            System.out.println("I is bigger");
+            System.out.println("Extra sysout just to demonstrate a block");
+        }
+        System.out.println("After the code block");
+    }
+}
+~~~
+
+The same code translated into Python renders into the following:
+
+~~~python
+i = 5
+if i > 0:
+    print("I is bigger")
+    print("Extra sysout just to demonstrate a block")
+print("After the code block")
+~~~
+
+The code is pretty readable for a Java-developer but there are some important differences:
+
+In Python you don't use braces {} to demarcate a code block.  
+Basically you just use tabs to indicate where a code block starts and ends
+
+Beside that, before every code block there is a construct ending by a colon.  
+This could be an if-clause (if + the boolean-expression) but you will see the same with functions.
+
+~~~python
+def hello_function():
+    print("Hello")
+    print("From Python")
+hello_function()
+~~~
+
+> More on function in a while...
+
+## Control (and code blocks)
+
+Now we know how code blocks are used lets dive in control-constructs in Python
+
+### Relational operators
+
+| Operator   |   Meaning              |
+|------------|------------------------|
+| ==         | equals                 |
+| !=         | not equals             |
+| <          | smaller                |
+| >          | greater                |
+| <=         | smaller or equal       |
+| >=         | bigger or equal        |
+
+
+Same as in Java they compare 2 numbers and do return a boolean as result
+
+~~~python
+a = 5
+b = 6
+c = a < b 
+print(c)   # prints False
+d = a > b
+print(d)   # prints True
+~~~
+
+### Logical operators
+
+The logical operators are different but with identical semantics:
+
+
+| Operator   |   Java-operator      |
+|------------|----------------------|
+| and        | &&                   |
+| or         | \|\|                 |
+| not        | &&                   |
+
+
+### if - else
+
+Same as in Java you can use an else-clause
+
+~~~python
+x = 5
+if x < 0:
+    print("negative")
+else:
+    print("positive")
+~~~
+
+And basically you can nest an if (or something else) in these clauses...
+
+~~~python
+x = 0
+if x < 0:
+    print("negative")
+else:
+    if x == 0:
+        print("zero")
+    else:
+        print("positive")
+~~~
+
+
+### elif
+
+~~~python
+x = 0
+if x < 0:
+    print("negative")
+elif x == 0:
+    print("zero")
+else:
+    print("positive")
+~~~
+
+### Ternary expression vs if expression
+
+
+~~~java
+public class Hello {
+    public static void main(String[] args) {
+        int i = 5;
+        String result = i > 0 ? "positive" : "negative";
+        System.out.println(result);
+    }
+}
+~~~
+
+~~~python
+i = 5
+result = "positive" if i > 0 else "negative"
+print(result)
+~~~
+
+
+### Switch - case vs match - case
+
+~~~python
+choices = """
+A. Choice A
+B. Choice B
+C. Choice C
+"""
+
+print(choices)
+choice = input("Please give input: ")
+match choice.upper():
+    case "A": print("Choice A")
+    case "B": print("Choice B")
+    case "C": print("Choice C")
+    case _ : print(f"Choice {choice} doesnt exists")
+~~~
+
+### while-loop (no do while)
+
+* continue and break
+
+### for-loop
+
+~~~python
+for i in range(5):
+    print(i)
+~~~
+
+
+
+
+
 ## Function
 
-Let's start with a simple static functions 
+Let's start with a simple static function.
 
 > We will tackle OOP in a minute
 
@@ -455,80 +740,37 @@ print_message(message)
 print(add(5))
 ~~~
 
-## Control
 
-### if - else
+### Explicit global
 
 ~~~python
-x = 5
-if x < 0:
-    print("negative")
-else:
-    print("positive")
+a = 5
+
+def change_a(b):
+    a = b
+    print(a)
+
+change_a(10)
+
+print(a)
 ~~~
 
-
 ~~~python
-x = 0
-if x < 0:
-    print("negative")
-else:
-    if x == 0:
-        print("zero")
-    else:
-        print("positive")
-~~~
+a = 5
 
+def change_a(b):
+    global a
+    a = b
+    print(a)
 
-~~~python
-x = 0
-if x < 0:
-    print("negative")
-elif x == 0:
-    print("zero")
-else:
-    print("positive")
-~~~
+change_a(10)
 
-### match - case
-
-~~~python
-choices = """
-A. Choice A
-B. Choice B
-C. Choice C
-"""
-print(choices)
-choice = input("Please give input: ")
-match choice.upper():
-    case "A": print("Choice A")
-    case "B": print("Choice B")
-    case "C": print("Choice C")
-    case _ : print(f"Choice {choice} doesnt exists")
-~~~
-
-### while-loop (no do while)
-
-* continue and break
-
-### for-loop
-
-~~~python
-for i in range(5):
-    print(i)
+print(a)
 ~~~
 
 
 
-
-### Ternary expression vs if expression
-
-
-~~~python
-a = 5 if 5 < 10 else 20
-~~~
-
-### Exceptions
+## Exceptions
 
 ~~~python
 print("Hello")
