@@ -1,19 +1,4 @@
-# Python samples
-
-https://github.com/blu3r4y/python-for-java-developers?tab=readme-ov-file
-
-https://realpython.com/java-vs-python/
-
-https://raygun.com/blog/java-vs-python/
-
-https://python.pages.doc.ic.ac.uk/java/lessons/java/01-intro/03-example.html
-
-https://www.javatpoint.com/basic-python-for-java-developers
-
-https://stackoverflow.com/questions/63667488/is-there-assignment-expression-for-java-like-walrus-operator-in-python
-
-vs walrus operator
-
+# From Python to Java
 
 ## Getting started with a "Hello World"
 
@@ -68,7 +53,7 @@ $
 
 #### Python is a scripting-language in nature
 
-Obviously Python is a scripting language, you can run the code in place without intermediate build phases
+Obviously Python is a **scripting language**, you can run the code in place **without** **intermediate build** phases
 
 Just like other scripting language you just write the script and feed it directly to the interpreter.
 
@@ -76,14 +61,14 @@ Just like other scripting language you just write the script and feed it directl
 
 You can **run** command line-programming without defining a class without defining a main-function (like in other languages like Java, C, C++, ...).  
 
-Python - as you will see later - has quite good support for both OOP and FOP but scales perfectly to basic procedural scripting-style.
+Python - as you will see later - has quite good **support** for both **OOP** and **FOP** but scales perfectly to basic **procedural scripting-style**.
 
-Also you don't need to use an class-system to use a simple print-function.  
+You don't need to use an class-system to perform typical day-to-day features like a simple print-function, reading a file, requesting input...  
 The print-function is a first class member and directly accessible (without static import)
 
 #### Buy buy semicolon";"
 
-No semicolons are required.  
+**No semicolons** are required.  
 Simple statements can be distinguished from each other by new lines
 
 ~~~python
@@ -97,7 +82,7 @@ The syntax in calling functions is similar to how you invoke them in java Java.
 
 ## Comments
 
-In java we distinguish 2 types of comments (beside Javadoc):
+In **Java** we distinguish **2 types of comments** (beside Javadoc):
 
 * One line comments starting with slashes
 * 2 line comments starting with 
@@ -115,7 +100,7 @@ Multiline comment
 */
 ~~~
 
-In Python one-line-comments are marked as indicated below
+In **Python** one-line-comments are marked as indicated below
 
 ~~~python
 # One line comment
@@ -127,16 +112,19 @@ over here
 '''
 ~~~
 
+Multiline comments are marked by 3 quotes (can be single or double)
+
 ## Variables and dynamic typing
 
-A big difference between Java and Python is the way on how variables are defined and used.
+Now we reviewed/compared a simple "Hello World".  
+Let's now look at how variables are used in Python vs Java and that's a little different...
 
 ### Variables in Python vs Java
 
-Let's start with storing our message in a variable
+Let's change the previous example and store our message in a variable
 
 ~~~java
-class Hello {
+public class Hello {
     public static void main(String[] args) {
         String message = "Hello, World!";
         System.out.println(message); 
@@ -144,18 +132,20 @@ class Hello {
 }
 ~~~
 
-In Python you can **define** a **variable** just as in Java but you
-**don't need** to **declare** a **type** neither do you need to use a var-keyword (in the case of type inference)
+Below you see the equivalent in Python and you observe directly a big difference...
 
 ~~~python
 message = "Hello World"
 print(message)
 ~~~
 
-## Handles are dynamicly typed
+In Python you can **define** a **variable** just as in Java but you
+**don't need** to **declare** a **type** (not even a keyword like var)
 
-You might think the type of the handle is inferred like it
-is with the var-keyword but that's not really the case
+### References (handles) are dynamicly typed
+
+You might think the type of the reference is inferred like it
+is with the var-keyword...
 
 ~~~java
 class HelloWorld {
@@ -166,8 +156,11 @@ class HelloWorld {
 }
 ~~~
 
-In **Java** a **handle** is actually **containing** some type-information on the heap-object it's referring (e.g.g interface or class that the actual heap-object is implementing) in 
-Python this is just a simple label (name) and a pointer to the object
+...but that's not really the case  
+In **Java** a **reference/handle** is actually **containing** some **type-information** on the object it's referring to (e.g. interface or class that the actual heap-object is implementing).  
+
+In Python this is just a simple label (name) and a pointer to the object.  
+This means that you can **change** the object it's pointing to an object of another type like in the example below...
 
 ~~~python
 message = "Hello World"
@@ -176,7 +169,12 @@ message = 1 + 3
 print(message)
 ~~~
 
+Important to not here is that in Python everything is an object which is not the
+case in Java where primitives are not stored as references.
+
 ## Primitive datatypes
+
+Now we know how Python treats variables, let's consider the basic built-in primitive types.  
 
 Python has a relative simple type-system compared to Java.
 The 5 primitive data structures are:
@@ -184,11 +182,14 @@ The 5 primitive data structures are:
 * Integers
 * Floats
 * Strings
-* Booleans 
+* Booleans
+* Complex Numbers
+
+> Strings are indeed more complex compared to number being backed by a buffer...
 
 ### type-operator
 
-Python has a built-in function (actually an operator) allowing 
+Python has a built-in function (actually an operator) **type()** allowing 
 you to identify the type.  
 
 ~~~python
@@ -204,7 +205,7 @@ a = 1 + 2j
 print(type(a))
 ~~~
 
-If you run this you would see
+If you run the snippet above you would see the following printout:
 
 ~~~
 <class 'str'>
@@ -254,42 +255,6 @@ $ javac DoubleTest
 **Java** contains **byte, short, int or long** depending on the size you need.  
 **Python** on the other hand has only one integer type **int**
 
-#### Operations
-
-All types suport the following arithmetic operators identical to Java with
-the **exception** of the **true-division** and **power-operator**
-
-| Operator   |   Meaning            |
-|------------|----------------------|
-| +          | addition             |
-| -          | substraction         |
-| *          | multiplication       |
-| /          | floor-division       |
-| //         | true-division        |
-| %          | remainder            |
-| **         | power                |
-
-~~~python
-x = 10.5
-y = -3
-
-print("x + y =", x + y)                  # addition
-print("x - y =", x - y)                  # subtraction
-print("x * y =", x * y)                  # multiplication
-
-print("x / y =", x / y)                  # normal division
-print("x // y =", x // y)                # integer division
-print("x % y =", x % y)                  # modulo
-
-print("abs(y) =", abs(y))
-print("int(x) =", int(x))                # convert to integer
-print("float(y) =", float(y))            # convert to float
-print("complex(x, y) =", complex(x, y))  # convert to complex
-
-print("pow(x, 3) =", pow(x, 3))          # exponentiation
-print("x ** 3 =", x ** 3)                # exponentiation (alternative syntax)
-~~~
-
 #### Arbitrary precision integers
 
 Where each type in Java has a specific length in python the precision is arbitrary.  
@@ -336,6 +301,42 @@ $
 
 > In Java you would use a BigInteger for these kind of scenario's
 
+#### Operations
+
+All types suport the following arithmetic operators identical to Java with
+the **exception** of the **true-division** and **power-operator**
+
+| Operator   |   Meaning            |
+|------------|----------------------|
+| +          | addition             |
+| -          | substraction         |
+| *          | multiplication       |
+| /          | floor-division       |
+| //         | true-division        |
+| %          | remainder            |
+| **         | power                |
+
+~~~python
+x = 10.5
+y = -3
+
+print("x + y =", x + y)                  # addition
+print("x - y =", x - y)                  # subtraction
+print("x * y =", x * y)                  # multiplication
+
+print("x / y =", x / y)                  # normal division
+print("x // y =", x // y)                # integer division
+print("x % y =", x % y)                  # modulo
+
+print("abs(y) =", abs(y))
+print("int(x) =", int(x))                # convert to integer
+print("float(y) =", float(y))            # convert to float
+print("complex(x, y) =", complex(x, y))  # convert to complex
+
+print("pow(x, 3) =", pow(x, 3))          # exponentiation
+print("x ** 3 =", x ** 3)                # exponentiation (alternative syntax)
+~~~
+
 #### No increment operator
 
 In most C-like languages (as Java is) the increment en decrement-operators are supported.  
@@ -351,7 +352,7 @@ public class Hello {
 ~~~
 
 Python however does not have such a special syntax.  
-To increment x by 1 you have to write 
+To increment x by 1 you're limited to the following
 
 ~~~python
 i += 1 
@@ -360,7 +361,6 @@ i = x + 1 .
 
 This is partly due to the fact that Python is not supporting the typical
 for-loops we know from Java as we will see a little bit further.
-
 
 #### True division operator
 
@@ -377,7 +377,7 @@ class Hello {
 If you want an floating-point result you need an explicit cast on one of both integers.
 
 ~~~java
-class Hello {
+public class Hello {
     public static void main(String[] args) {
         System.out.println((double)5 / 2); 
     }
@@ -394,7 +394,105 @@ print(5 / 2) # 2.5
 
 ### Strings
 
-#### Format string (f-strings)
+#### Declaring Strings
+
+Strings in Python are very similar in Java.  
+One important difference is that you can declare String with both single and double quotes
+
+~~~python
+print("hello")
+print('hello')
+~~~
+
+This can come in quite handy if you want to print explicitly single of double quotes like hereunder.  Running the code below...
+
+~~~python
+print("'hello'")
+print('"hello"')
+~~~
+
+...results in...
+
+~~~
+'hello'
+"hello"
+~~~
+
+> Using both type of quotes is possible because you char's don't exist in Python
+
+#### Concatenating strings
+
+String concatenation is similar in Python compared to Java:
+
+~~~java
+public class StringConcatenation {
+    public static void main(String[] args) {
+        System.out.println("Hello " + "World " + "in Java");
+        System.out.println(String.join("Hello ","World", "in Java"));
+        System.out.println(new StringBuilder()
+                                .append("Hello")
+                                .append("World")
+                                .append("in Java")
+                                .toString());
+    }
+}
+~~~
+
+Both basic concatenation as a join-operation is provided in Python
+
+~~~python
+print("Hello " + "World " + "in Java");
+print("".join("Hello ","World", "in Java"));
+~~~
+
+
+#### String formatting
+
+In Java you can replace concatenation with typical String-formatting.  
+e.g. the following example...
+
+~~~Java
+public class HelloFormatting {
+    public static void main(String[] args) {
+        String baseString = "Hello %s! This course takes about %,d minutes.";
+        String target = "World";
+        int minutes = 120;
+        String result = String.format(baseString, target, minutes);
+        System.out.println(result);
+    }
+}
+~~~
+
+...results in the following output:
+
+~~~
+Hello World! This course takes about 120 minutes.
+~~~
+
+The equivalent in Python is:
+
+~~~python
+baseString = "Hello {target}! This course takes about {minutes} minutes.";
+target = "World";
+minutes = 120;
+
+print(baseString.format(target = target, minutes = minutes ))
+~~~
+
+However starting Python 3.10 takes this one level further with fstrings which are introduced 
+
+~~~python
+target = "World";
+minutes = 120;
+
+print(f"Hello {target}! This course takes about {minutes} minutes.")
+~~~
+
+This binds basically directly variables or members of a class to the string
+without the need of passing variables to a format method.
+
+> Don't wory, one day a similar feature will be available in Java :)  
+> See https://openjdk.org/jeps/430
 
 ~~~python
 pi = 3.14159265359
@@ -617,10 +715,6 @@ for i in range(5):
     print(i)
 ~~~
 
-
-
-
-
 ## Function
 
 Let's start with a simple static function.
@@ -695,7 +789,9 @@ message = "Hello World"
 print_message(message="Hello", name="Bart")
 ~~~
 
-### Empty function
+### Empty function (pass-)
+
+As Java uses braces it's easy to demarcate the start and end of a function like below
 
 ~~~java
 class HelloWorld {
@@ -705,10 +801,14 @@ class HelloWorld {
 }
 ~~~
 
+Python however requires at least one line to identify the start and end of a function or code block.
+
 ~~~python
 def empty_function():
     pass
 ~~~
+
+The same rule applies to if-else, loops, classes without content
 
 ### Default values
 
@@ -767,8 +867,6 @@ change_a(10)
 
 print(a)
 ~~~
-
-
 
 ## Exceptions
 
@@ -889,6 +987,13 @@ for i, punt in enumerate(punten):
   print(f'student {i} heeft {punt} punten')
 ~~~
 
+~~~
+student 1 heeft 15 punten
+student 2 heeft 16 punten
+student 3 heeft 8 punten
+student 4 heeft 9 punten
+~~~
+
 ### Tuple
 
 ### Set
@@ -907,6 +1012,30 @@ print("a - b =", a - b)  # difference
 ~~~
 
 ### Dictionary
+
+~~~python
+grades = {
+    "Jan": 15,
+    "Piet": 16,
+    "Joris": 8,
+    "Korneel": 9
+}
+
+grades = dict(Jan: 15, Piet: 16, Joris: 8, Korneel: 9)
+
+
+grades["Jan"]
+grades["Piet"] = 5 
+grades["Joris"] = 4
+
+# remove an element (will raise an error if the key does not exist)
+if "math" in grades:
+    del grades["math"]
+
+grades.keys()              # get all the keys as a list
+grades.values()            # get all the values as a list
+~~~
+
 
 ### Collection destructuring
 
