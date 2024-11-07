@@ -668,6 +668,8 @@ else:
 
 ### Ternary expression vs if expression
 
+In Java there's is a shorthand for if-else you can use for retrieving values called
+the ternary operator as shown below.
 
 ~~~java
 public class Hello {
@@ -678,6 +680,8 @@ public class Hello {
     }
 }
 ~~~
+
+The counterpart in Python is a conditional expression as shown below.
 
 ~~~python
 i = 5
