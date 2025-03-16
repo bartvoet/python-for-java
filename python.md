@@ -66,7 +66,7 @@ Python - as you will see later - has quite good **support** for both **OOP** and
 You don't need to use an class-system to perform typical day-to-day features like a simple print-function, reading a file, requesting input...  
 The print-function is a first class member and directly accessible (without static import)
 
-#### Buy buy semicolon";"
+#### Buy buy semicolons ";"
 
 **No semicolons** are required.  
 Simple statements can be distinguished from each other by new lines
@@ -76,7 +76,16 @@ print("Hello, World!")
 print("Greetings from Python")
 ~~~
 
-#### Similarities in java
+Note:  
+Actually they are allowed in Python, you could do the following in Python but 
+it doesn't make to much sense in the Python-philosophy as you will see with the concept of blocks. 
+
+~~~python
+print("This is something allowed");
+print("But which is never used in Python");
+~~~
+
+#### Similarities to java
 
 The syntax in calling functions is similar to how you invoke them in java Java.
 
@@ -142,10 +151,10 @@ print(message)
 In Python you can **define** a **variable** just as in Java but you
 **don't need** to **declare** a **type** (not even a keyword like var)
 
-### References (handles) are dynamicly typed
+### References (handles) are dynamically typed
 
 You might think the type of the reference is inferred like it
-is with the var-keyword...
+is with the var-keyword in Java...
 
 ~~~java
 class HelloWorld {
@@ -445,7 +454,6 @@ print("Hello " + "World " + "in Java");
 print("".join("Hello ","World", "in Java"));
 ~~~
 
-
 #### String formatting
 
 In Java you can replace concatenation with typical String-formatting.  
@@ -510,35 +518,6 @@ print(f"{pi:.3e}")     # scientific notation
 
 ratio = 0.25
 print(f"{ratio:.1%}")  # percentage
-~~~
-
-## Input and output
-
-~~~python
-name = input("Give name please")
-print(type(name))
-print(f"Hello {name}")
-~~~
-
-~~~python
-print("Give name please", end="")
-name = input()
-print(type(name))
-print(f"Hello {name}")
-~~~
-
-### Reading and writing
-
-~~~python
-filename = "m06_file_io.txt"
-
-with open(filename, "w+") as f:
-    f.write("Hello\n")
-    f.write("File!\n")
-
-with open(filename, "r") as f:
-    for line in f.read().splitlines():
-        print(line)
 ~~~
 
 ## Code blocks: Java vs Python (buy buy braces)
@@ -719,11 +698,174 @@ for i in range(5):
     print(i)
 ~~~
 
-## Function
+## Some more input and output...
+
+As Python is frequently used as a scripting-language, knowing how to read and write data to the command line is
+very important...
+
+### Printing to the console
+
+
+~~~java
+import java.io.Console;
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+~~~
+
+~~~python
+greeting = "Hello"
+name = "World"
+print(greeting, name)
+~~~
+
+~~~java
+import java.io.Console;
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.print("Hello ");
+        System.out.print("World");
+    }
+}
+~~~
+
+
+
+~~~python
+print("Hello", end="")
+print("World")
+~~~
+
+
+
+### Reading input from command line
+
+First thing, how to write to and read data from the command line?
+In **Java**, there are multiple options:
+
+* You could use e.g. a **BufferedReader**:
+
+~~~java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class ReadFromCommandLineReader {
+    public static void main(String[] args) throws IOException {
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        
+        System.out.println("Enter some text");
+        String s = r.readLine();
+        
+        System.out.println("You typed: " + s);
+    }
+}
+~~~
+
+* Or use a the **Scanner**-class, allowing you directly reading numbers without explicitly parsing the values
+
+~~~java
+import java.util.Scanner;
+
+public class ReadFromCommandLineScanner {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+       
+        System.out.println("Enter a number");
+        int number = scanner.nextInt(); //nextLine() for just strings...
+
+        System.out.println("The number is: " + number);
+    }
+}
+~~~
+
+> (3rd option is the Console-class described further)
+
+In **Python**, reading from the console is a first-class concept, just like for printing you don't need to use classes or objects, just use a simple function **input**.  
+
+~~~python
+name = input("Give name please: \n")
+print(f"Hello {name}")
+~~~
+
+An extra nice thing about the input function is that it allows you to pass and accompanying text
+that is printed to the console.
+
+~~~python
+text = input("Enter some text: \n")
+print(f"Hello {text}")
+~~~
+
+~~~python
+print("Enter some text: ")
+text = input()
+print(f"Hello {text}")
+~~~
+
+### Reading a password
+
+Another (3rd) way of reading input from the console in Java is through the Console-class.  
+The readLine() allows like Python passing a text you can introduce and this class allows you to read passwords from the command line without the input being echoed to the console.
+
+~~~Java
+import java.io.Console;
+
+public class ReadFromCommandLinePassword {
+    public static void main(String[] args) {
+        Console console = System.console();
+        
+        char[] password = console.readPassword("Please provide you password: ");
+        console.printf(String.valueOf(password));
+    }
+}
+~~~
+
+Evidently this functionality also exists in Python...
+
+~~~python
+import getpass
+
+print("Please provide you password")
+password = getpass.getpass()
+print(f"Your password is {password}")
+~~~
+
+### Reading and writing
+
+~~~python
+filename = "test.txt"
+
+write_file = open(filename, "w+")
+write_file.write("Hello\n")
+write_file.write("File!\n")
+write_file.close()
+
+read_file = open(filename, "r")
+for line in read_file.read().splitlines():
+    print(line)
+~~~
+
+~~~python
+filename = "test.txt"
+
+with open(filename, "w+") as write_file:
+  write_file.write("Hello\n")
+  write_file.write("File!\n")
+
+with open(filename, "r") as read_file:
+  for line in read_file.read().splitlines():
+      print(line)
+~~~
+
+## Functions
 
 Let's start with a simple static function.
 
-> We will tackle OOP in a minute
+> Don't worry, we will tackle OOP in a minute
 
 ~~~java
 class HelloWorld {
@@ -843,7 +985,6 @@ message = "Hello World"
 print_message(message)
 print(add(5))
 ~~~
-
 
 ### Explicit global
 
@@ -982,6 +1123,14 @@ print(l[:-1])
 print([0,1,2,3,4] + [5,6,7])
 ~~~
 
+### Collection destructuring/unpacking
+
+~~~python
+a, b = 5, 8
+print(a)
+print(b)
+~~~
+
 ### Enumerate
 
 ~~~python
@@ -1017,6 +1166,8 @@ print("a - b =", a - b)  # difference
 
 ### Dictionary
 
+In Java you have the Map-datatype with a couple of implementations you can choose from dependent on performance-characteristics.
+
 ~~~python
 grades = {
     "Jan": 15,
@@ -1040,8 +1191,6 @@ grades.keys()              # get all the keys as a list
 grades.values()            # get all the values as a list
 ~~~
 
-
-### Collection destructuring
 
 ### Named tuple
 
@@ -1122,9 +1271,6 @@ for student in students:
 
 ### Functional programming
 
-
-
-
 ~~~python
 l = [1,2,3,4,5,6,7,8]
 print(list(map(lambda x: x * 2, l)))
@@ -1172,3 +1318,4 @@ list(
      )
 )
 ~~~
+
