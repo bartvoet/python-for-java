@@ -89,39 +89,301 @@ print("But which is never used in Python");
 
 The syntax in calling functions is similar to how you invoke them in java Java.
 
-## Comments
+## REPL - interactive Python
 
-In **Java** we distinguish **2 types of comments** (beside Javadoc):
+Python code can be executed in 2 ways:
 
-* One line comments starting with slashes
-* 2 line comments starting with 
-  
-~~~java
-// One line comment
-class HelloWorld {
-    public static void main(String[] args) {
-        String message = "Hello, World!";
-        System.out.println(message); 
-    }
-}
-/*
-Multiline comment
-*/
+* **File-based:** execute python statements from inside a file
+* **Interactive:** from within a shell execute statement by statement and do instant results
+
+### Interactively execute code (or REPL)
+
+A **REPL** is provided for some programming languages -and/or environments.  
+This stands for **R**ead **E**val **P**rint **L**oop:
+
+* **R**ead: reading an expression from the user.
+* **E**val: evaluation of this expression and ultimately its execution
+* **P**rint: print out the result of this expression (if there is one)
+* **L**oop: wait (continuously) again for the next expression or statement
+
+You get immediate **feedback on your statements**, so to speak....
+
+### Interactive "Hello World"
+
+You simply open the REPL by typing the **python command** (python3 on Linux Mint in the example below)
+
+~~~bash
+$ python3
+Python 3.4.2 (default, Oct 8 2014, 10:45:20) 
+[GCC 4.9.1] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
 ~~~
 
-In **Python** one-line-comments are marked as indicated below
+From that **>>>** appears (preceded by some system info) you can get started and run Python statement or commands.  
+We will continue with some commands:
+
+### Expressions
+
+A first use is to call an expression
+
+~~~
+$ python3
+Python 3.4.2 (default, Oct 8 2014, 10:45:20) 
+[GCC 4.9.1] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 5 + 5
+10
+>>>
+~~~
+
+In this example, we will type a one expression *"5 + 5"* followed by a enter.   
+The interpreter will:
+
+* execute this expression 
+* capture the result
+* and print on the next line.  
+
+
+~~~
+$ python3
+Python 3.4.2 (default, Oct 8 2014, 10:45:20) 
+[GCC 4.9.1] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 5 + 5
+10
+>>>
+~~~
+
+
+### Valid code
+
+Obviously, you must enter valid expressions and/or statements, otherwise an error message will remain.  
+
+~~~
+$ python3
+Python 3.6.8 (default, Oct  7 2019, 12:59:55) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 3 +
+  File "<stdin>", line 1
+    3 +
+      ^
+SyntaxError: invalid syntax
+>>> 
+~~~
+
+
+What is interesting is that the interpreter does not terminate and you can retry your code.   
+In file-based programming, the program would be terminated.... 
+
+Previous example was an invalid syntax, next example is a valid syntax but referencing an undefined variable.
+
+~~~
+$ python3
+Python 3.6.8 (default, Oct 7 2019, 12:59:55) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> a = 5
+>>> print(b)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'b' is not defined
+>>> print(a)
+5
+>>>
+~~~
+
+After the error, you can correct the code, and print the correct variable - a-.
+
+### Handy calculator
 
 ~~~python
-# One line comment
-message = "Hello World"
-print("hello world")
-'''
-Multiline comments
-over here
-'''
+>>> x = 5 + 2 - 3 * 2
+>>> x
+1
+>>> x = 5 + (2 - 3) * 2
+>>> x
+3
+>>> 5 / 2
+2
+>>> 5 // 2
+2
+>>> 5.5 / 2
+2.75
+>>> 2 ** 8
+256
+>>> 5 % 2
+1
+>>>
 ~~~
 
-Multiline comments are marked by 3 quotes (can be single or double)
+### Sequential implementation
+
+In addition to pure expressions, you can enter ordinary statements just like a program.
+
+~~~python
+>>> message = "Hello World"
+>>> print(message)
+Hello World
+>>>
+~~~
+
+In this case, we perform 2 statements:
+
+* initialize a variable
+* print this variable
+
+These statements - as with file-based execution - are executed in the order that you entered them.
+
+### More complex examples
+
+In addition to sequential statements, you can also create more complex structures such as functions and block statements.   
+The example below contains a function followed by a loop
+
+~~~python
+>>> def print_number(i):
+...     print("hello " + str(i))
+...
+>>> loops = 5
+>>> for i in range(loops):
+...     print_number(i)
+...
+hello 0
+hello 1
+hello 2
+hello 3
+hello 4
+>>>
+~~~
+
+When the interpreter recognizes that a block follows (at the function and for) the prompt changes to a **block mode**, you can recognize this by the **...** instead of the **>>**.  
+In this mode you can type code without it not being executed after an entry.
+
+To get out of this mode you have to type enter twice, then this code is executed (or in case of a function it is created and made available).
+
+### Leaving the console
+
+To exit the REPL, call the exit() function
+
+~~~
+$ python3
+>>> exit()
+$
+~~~
+
+### Tips...
+
+The REPL is an incredibly useful tool that allows you to test or try something out in a short amount of time.  
+We will come back to this in Part 3 with some additional tips and tricks, some things you can already try out:
+
+#### Tab completion
+
+Python completes code where possible when you type a tab....  
+
+~~~
+Python 3.6.7 (default, Oct 22 2018, 11:32:17)
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> wh
+~~~
+
+If you type a tab after this wh appears 
+
+~~~
+Python 3.6.7 (default, Oct 22 2018, 11:32:17)
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> while
+~~~
+
+If there are several possibilities, this one will be shown, for example if we type only w
+
+~~~
+Python 3.6.7 (default, Oct 22 2018, 11:32:17)
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> w
+while with
+>>> w
+~~~
+
+#### History
+
+The REPL omits the previous commands you typed, by using the arrow keys you can browse through the previously typed commands.
+
+#### Help!!!
+
+There is also a help function provided, if you call it without arment you will come to a new interactive console.  
+A full explanation is beyond the scope of an introduction but on the basis of this initial comment you can already look up some things
+You can exit with the keyword quit.
+
+You can also include an argument to get more info about functions ...
+
+~~~
+>>> help("print")
+Help on built-in function print in module builtins:
+
+print(...)
+    print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
+
+    Prints the values to a stream, or to sys.stdout by default.
+    Optional keyword arguments:
+    file:  a file-like object (stream); defaults to the current sys.stdout.
+    sep:   string inserted between values, default a space.
+    end:   string appended after the last value, default a newline.
+    flush: whether to forcibly flush the stream.
+(END)
+~~~
+
+Or data types
+
+~~~
+Help on class int in module builtins:
+
+class int(object)
+ | int(x=0) -> integer
+ | int(x, base=10) -> integer
+ |
+ | Convert a number or string to an integer, or return 0 if no arguments
+ | are given.  If x is a number, return x.__int__().  For floating point
+ | numbers, this truncates toward zero.
+ |
+ | If x is not a number or if base is given, then x must be a string,
+ | bytes, or bytearray instance representing an integer literal in the
+ | given base.  The literal can be preceded by '+' or '-' and be surrounded
+ | by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
+ | Base 0 means to interpret the base from the string as an integer literal.
+ | >> int('0b100', base=0)
+ | 4
+ |
+ | Methods defined here:
+ |
+ | __abs__(self, /)
+ | abs(self)
+ |
+ | __add__(self, value, /)
+ | return self+value.
+ |
+ | __and__(self, value, /)
+ | Return self&value.
+ |
+ | __bool__(self, /)
+ | self != 0
+ |
+ | __ceil__(...)
+ | Ceiling of an Integral returns itself.
+ |
+ | __divmod__(self, value, /)
+ | Return divmod(self, value).
+ |
+ | __eq__(self, value, /)
+ | Return self==value.
+ |
+:
+~~~
+
+> Om deze schermen te verlaten dien je "q" te typen.
 
 ## Variables and dynamic typing
 
@@ -394,7 +656,6 @@ public class Hello {
 ~~~
 
 In Python however there are 2 operators
-
 
 ~~~python
 print(5 // 2) # 2
@@ -697,6 +958,41 @@ match choice.upper():
 for i in range(5):
     print(i)
 ~~~
+
+## Comments
+
+In **Java** we distinguish **2 types of comments** (beside Javadoc):
+
+* One line comments starting with slashes
+* 2 line comments starting with 
+  
+~~~java
+// One line comment
+class HelloWorld {
+    public static void main(String[] args) {
+        String message = "Hello, World!";
+        System.out.println(message); 
+    }
+}
+/*
+Multiline comment
+*/
+~~~
+
+In **Python** one-line-comments are marked as indicated below
+
+~~~python
+# One line comment
+message = "Hello World"
+print("hello world")
+'''
+Multiline comments
+over here
+'''
+~~~
+
+Multiline comments are marked by 3 quotes (can be single or double)
+
 
 ## Some more input and output...
 
@@ -1013,7 +1309,7 @@ change_a(10)
 print(a)
 ~~~
 
-## Collection
+## Collections
 
 
 ### List
@@ -1134,9 +1430,169 @@ print(f"The Student age using index is {a_student[1]}: ")
 print(f"The Student name using keyname is {a_student.name}: ")
 ~~~
 
-## Classes and OOP
+## Objects and classes
+
+So far - collections aside - we have **only worked** with  **simple** data **types** that can hold a single value such as int, float, boolean, ... among others.
+
+> Note: String was an exception to this considering that is actually a list of characters....
+
+In this section we look at classes in python, which allow us to structure data in 1 data type
+
+### Simple case: student application
+
+Suppose you want to build an an application that wants to track grades for a course, as in the table representation below.
 
 
+| id| Name    | First name | Lab    | Theory    |
+|---|---------|------------|--------|-----------|
+| 1 | Jan     | Janssens   | 15     |        16 |
+| 2 | Piet    | Pieters    |   15   |    16     | 
+| 3 | Joris | Jorissen | 15 | 16 |
+| 4 | Korneel | Kastaar | 15 | 16 |
+
+
+### Structured programming with classes
+
+In Python, just like in Java you can do this like in Java with classes.  
+
+### Class of student
+
+Let's plug right in with our previous example to extend.  
+Applied to a student such a data type looks like this, you start each time with:
+
+* The keyword **class**
+* Followed by a **name** for this type
+  (Student in this case)
+* Followed by a block-indicator **:**
+
+~~~python
+class Student:
+    name = ""
+    lab_points = 0
+    theory_points = 0
+~~~
+
+Below the class-definition the 3 attributes are listed
+
+* name
+* lab_points
+* theory_points
+
+### Creating an object
+
+When you create a variable of such type we call it an **object** as is shown in the snippet below
+Instantiates an object of the Student-type
+
+~~~python
+class Student:
+    name = ""
+    lab_points = 0
+    theory_points = 0
+
+jan = Student()
+~~~
+
+An **object** is created by a special function (Student()) called the **constructor**. 
+
+~~~python
+class Student:
+    name = ""
+    lab_points = 0
+    theory_points = 0
+
+jan = Student()
+jan.name = "Jan Janssens"
+jan.lab_points = 15
+Jan.theory_points = 17
+
+print(jan.lab_points) # prints Jan Janssens
+print(jan.lab_points) # prints 15
+print(jan.theory_points) # prints 17
+~~~
+
+The attributes can be set of retrieved similar to Java through the dot-operator.
+
+### Constructor - spot the difference
+
+Same as in Java, Python use constructor in order to initialize the object (and it's state).  
+The difference - in syntax - is that the new keyword as it is used in Java...
+
+~~~Java
+jan = new Student()
+~~~
+
+...is not used in Python...
+
+~~~python
+jan = Student()
+~~~
+
+This **constructor**:
+
+* is a **function**
+* that is **automatically** created**  
+  (if you don't create it yourself, see directly)
+* with **the same name** as the **class**
+* which you **call** to create an **object** (or instance) of the class
+
+In a moment we're also going to see that this constructor can be modified, but first let's do something with the object.
+
+### Constructor with arguments
+
+You can extend the constructor function with arguments and can use these arguments 
+to initialize the attributes of the objects.
+
+~~~python
+class Student:
+    def __init__(self,name,lab,theory):
+        self.name = name
+        self.lab_points = lab
+        self.theory_points = theory
+
+students = []
+
+students.append(Student("Jan Janssens",15,17))
+students.append(Student("Piet Pieters",15,17))
+
+for student in students:
+    print(student.name + ":")
+    print(student.lab_points)
+    print(student.theory_points) 
+~~~
+
+Also note that it is no longer necessary to define the attributes, it is sufficient to associate them with self.  
+**self** is an alias/reference to the current instance of this class (Student) and is always required as the 1st argument to any **object method**.
+
+
+### Constructor with default arguments
+
+We can also assign default arguments to this....
+
+~~~python
+class Student:
+    def __init__(self,name,lab=0,theory=0):
+        self.name = name
+        self.lab_points = lab
+        self.theory_points = theory
+
+students = []
+
+students.append(Student("Jan Janssens",15,17))
+students.append(Student("Piet Pieters",15,17))
+students.append(Student("Student without theori",15))
+
+for student in students:
+    print(student.name + ":")
+    print(student.lab_points)
+    print(student.theory_points) 
+~~~
+
+### Classes and methods
+
+In addition to attributes, you can also add functions to classes called methods.  
+These are functions that are associated with an instance of an object; the constructor was a first special example.  
+
+In the example below, we add a method that calculates the points of students (based on it's attributes).
 
 ~~~python
 class Student:
@@ -1148,11 +1604,42 @@ class Student:
     def points(self):
         return (self.lab_points + self.theory_points)/2
 
+students = []
+
+students.append(Student("Jan Janssens",15,17))
+students.append(Student("Piet Pieters",15,17))
+
+for student in students:
+    print(student.name + ":")
+    print(student.lab_points)
+    print(student.theory_points) 
+    print(student.points())
+~~~
+
+### __str__
+
+Another special method (earlier we had already seen the constructor) is the string method.  
+If you add the method __str__ it will be called automatically when you want to convert a to a string:
+
+* By using the str() operator.
+* By passing the object to the print function (which in turn calls str())
+
+~~~python
+class Student:
+    def __init__(self,name,lab=0,theory=0):
+        self.name = name
+        self.lab_points = lab
+        self.theory_points = 0
+
+    def points(self):
+        return (self.lab_points + self.theory_points)/2
+
     def succeeded(self):
-        return self.points(self) >= 10    
+        return points(self) >= 10    
         
     def __str__(self):
-        return f"Student {self.name} has {self.lab_points} for lab and {self.theory_points} for theory, so average of {self.points()}"
+        return "Student {} has {} for lab and {} for theory, so average of {}".format(
+            self.name, self.lab_points,self.theory_points,self.points())
 
 students = []
 
@@ -1161,44 +1648,50 @@ students.append(Student("Piet Pieters",15,17))
 
 for student in students:
     print(student)
+    # or alternatively print(str(student))
 ~~~
 
+Returns following result:
+
+~~~
+Student Jan Janssens has 15 for lab and 0 for theory, so average of 7
+Student Piet Pieters has 15 for lab and 0 for theory, so average of 7
+~~~
+
+### __eq__
+
+The equivalent in Python to the equal-method is called __eq__
+
 ~~~python
-import datetime
-
-class Person:
-    def __init__(self, name, birthYear):
+class Student:
+    def __init__(self,name,lab=0,theory=0):
         self.name = name
-        self.birthYear = birthYear
-        
-    def age(self):
-        return datetime.date.today().year - self.birthYear
-
-class Student(Person):
-    def __init__(self,name, birthYear, lab=0,theory=0):
-        super().__init__(name, birthYear)
         self.lab_points = lab
-        self.theory_points = theory
+        self.theory_points = 0
 
     def points(self):
         return (self.lab_points + self.theory_points)/2
 
     def succeeded(self):
-        return self.points(self) >= 10    
+        return points(self) >= 10    
         
     def __str__(self):
-        return f"Student {self.name} with age {self.age()} has {self.lab_points} for lab and {self.theory_points} for theory, so average of {self.points()}"
+        return "Student {} has {} for lab and {} for theory, so average of {}".format(
+            self.name, self.lab_points,self.theory_points,self.points())
 
-students = []
+    def __eq__(self,other):
+        return other.name == self.name
 
-students.append(Student("Jan Janssens", 1974, 15,17))
-students.append(Student("Piet Pieters", 2004, 15,17))
+    
+x = Student("Jan Janssens",15,17)
+y = Student("Jan Janssens",10,11)
+z = Student("Dan Danssens",10,11)
 
-for student in students:
-    print(student)
+print(x==y)
+print(x==z)
 ~~~
 
-## Exceptions
+## Exceptions and error-handling
 
 ~~~python
 print("Hello")
@@ -1267,328 +1760,6 @@ circumference(1)  # prints +- 6,283...
 circumference(-1) # raises error
 ~~~
 
-## Objects and classes
-
-So far - collections aside - we have **only worked** with  **simple** data **types** that can hold a single value such as int, float, boolean, ... among others.
-
-> Note: String was an exception to this considering that is actually a list of characters....
-
-In this section we look at classes in python, which allow us to structure data in 1 data type
-
-### Simple case: student application
-
-Suppose you want to build an an application that wants to track grades for a course, as in the table representation below.
-
-~~~
-+---+---------+------------+--------+-----------+
-| id| Name    | First name | Lab    | Theory    |
-+---+---------+------------+--------+-----------+
-| 1 | Jan | Janssens | 15           |        16 |
-+---+---------+------------+--------+-----------+
-| 2 | Pieters | 15 | 16 |
-+---+---------+------------+--------+-----------+
-| 3 | Joris | 15 | 16 |
-+---+---------+------------+--------+-----------+
-| 3 | Korneel | 15 | 16 |
-+---+---------+------------+--------+-----------+
-~~~
-
-
-### Structured programming with classes
-
-In Python, you can do this like in Java with classes.  
-
-A class is a **structured data type** that allows you to **group** different values (or subvariables) under a single **object**.  
-
-### Class of student
-
-Let's plug right in with our previous example to extend.  
-Applied to a student such a data type looks like this, you start each time with:
-
-* The keyword **class**
-* Followed by a **name** for this type   
-  (Student in this case)
-* Followed by a block-indicator **:**
-
-~~~python
-class Student:
-    name = ""
-    lab_points = 0
-    theory_points = 0
-~~~
-
-Then you can have this followed by 1 or more **attributes** in this case this is:
-
-* name
-* lab_points
-* theory_points
-
-These attributes are **sub-variables** that are **connected** to an instance of a **class**.
-
-> Note: later we will see that - besides attributes - we can also attach functions to a class type
-
-### Creating an object
-
-When you create a variable of such type we call it an **object**.  
-The code below:
-
-* Defines such a type
-* Instantiates an object of this type
-
-~~~python
-class Student:
-    name = ""
-    lab_points = 0
-    theory_points = 0
-
-jan = Student()
-~~~
-
-An **object** is created by a special function (Student()) called the **constructor**. 
-
-### Constructor
-
-This **constructor**:
-
-* is a **function**
-* that is **automatically** created**  
-  (if you don't create it yourself, see directly)
-* with **the same name** as the **class**
-* which you **call** to create an **object** (or instance) of the class
-
-In a moment we're also going to see that this constructor can be modified, but first let's do something with the object.
-
-### Working with attributes
-
-An object consists of attributes (name, lab_points, theory_points), as they were described in the class.  
-The example below illustrates how to use these attributes.
-
-~~~python
-class Student:
-    name = ""
-    lab_points = 0
-    theory_points = 0
-
-jan = Student()
-jan.name = "Jan Janssens"
-jan.lab_points = 15
-Jan.theory_points = 17
-
-print(jan.lab_points) # prints Jan Janssens
-print(jan.lab_points) # prints 15
-print(jan.theory_points) # prints 17
-~~~
-
-You can read and edit these variables via dot notation - object name followed by dot followed by name - just as you would with a regular variable.
-
-### Multiple objects
-
-Of course, you can then add multiple objects
-
-~~~python
-class Student:
-    name = ""
-    lab_points = 0
-    theory_points = 0
-
-jan = Student()
-jan.name = "Jan Janssens"
-jan.lab_points = 15
-jan.theory_points = 17
-
-piet = Student()
-piet.name = "Piet Pieters"
-piet.lab_points = 15
-piet.theory_points = 17
-
-print(jan.lab_points)
-print(jan.lab_points)
-print(jan.theory_points)
-
-print(piet.lab_points)
-print(piet.lab_points)
-print(piet.theory_points)
-~~~
-
-In this example, you can clearly see that the attributes are associated with the object.  
-jan.lab_points is not the same as piet.lab_points
-
-### Multiple objects in a list
-
-Let's combine the principle of classes with lists.   
-This allows you to keep a dynamic collection of students.
-
-~~~python
-class Student:
-    name = ""
-    lab_points = 0
-    theory_points = 0
-
-students = []
-
-jan = Student()
-jan.name = "Jan Janssens"
-jan.lab_points = 15
-Jan.theory_points = 17
-students.append(jan)
-
-
-piet = Student()
-piet.name = "Piet Pieters"
-piet.lab_points = 15
-piet.theory_points = 17
-students.append(piet)
-
-for student in students:
-    print(student.lab_points)
-    print(student.theory_points) 
-~~~
-
-### Constructor with arguments
-
-You can extend the constructor function with arguments.  
-You can use these arguments to initialize the attributes
-
-~~~python
-class Student:
-    def __init__(self, name, lab, theory):
-        self.name = name
-        self.lab_points = lab
-        self.theory_points = theory
-
-students = []
-
-jan = Student("Jan Janssens",15,17)
-students.append(jan)
-piet = Student("Piet Pieters",15,17)
-students.append(pieters)
-
-for student in students:
-    print(student.name + ":")
-    print(student.lab_points)
-    print(student.theory_points) 
-~~~
-
-Also note that it is no longer necessary to define the attributes, it is sufficient to associate them with self.  
-**self** is an alias/reference to the current instance of this class (Student) and is always required as the 1st argument to any **object method**.
-
-### Constructor (2)
-
-Since you keep a list, it is no longer necessary to keep separate variables.  
-You can directly add student objects/instances to the list via the constructor.
-
-~~~python
-class Student:
-    def __init__(self,name,lab,theory):
-        self.name = name
-        self.lab_points = lab
-        self.theory_points = theory
-
-students = []
-
-students.append(Student("Jan Janssens",15,17))
-students.append(Student("Piet Pieters",15,17))
-
-for student in students:
-    print(student.name + ":")
-    print(student.lab_points)
-    print(student.theory_points) 
-~~~
-
-### Constructor (3)
-
-We can also assign default arguments to this....
-
-~~~python
-class Student:
-    def __init__(self,name,lab=0,theory=0):
-        self.name = name
-        self.lab_points = lab
-        self.theory_points = theory
-
-students = []
-
-students.append(Student("Jan Janssens",15,17))
-students.append(Student("Piet Pieters",15,17))
-students.append(Student("Student without theori",15))
-
-for student in students:
-    print(student.name + ":")
-    print(student.lab_points)
-    print(student.theory_points) ) 
-~~~
-
-### Classes and Methods
-
-In addition to attributes, you can also add methods.  
-These are functions that are associated with an instance of an object; the constructor was a first special example.  
-
-In the example below, we add a method that calculates the final points of students.
-
-~~~python
-class Student:
-    def __init__(self,name,lab=0,theory=0):
-        self.name = name
-        self.lab_points = lab
-        self.theory_points = theory
-
-    def points(self):
-        return (self.lab_points + self.theory_points)/2
-
-students = []
-
-students.append(Student("Jan Janssens",15,17))
-students.append(Student("Piet Pieters",15,17))
-
-for student in students:
-    print(student.name + ":")
-    print(student.lab_points)
-    print(student.theory_points) 
-    print(student.points())
-~~~
-
-### __str__
-
-Another special method (earlier we had already seen the constructor) is the string method.  
-If you add the method __str__ it will be called automatically when you want to convert a to a string:
-
-* By using the str() operator.
-* By passing the object to the print function (which in turn calls str())
-
-~~~python
-class Student:
-    def __init__(self,name,lab=0,theory=0):
-        self.name = name
-        self.lab_points = lab
-        self.theory_points = 0
-
-    def points(self):
-        return (self.lab_points + self.theory_points)/2
-
-    def succeeded(self):
-        return points(self) >= 10    
-        
-    def __str__(self):
-        return "Student {} has {} for lab and {} for theory, so average of {}".format(
-            self.name, self.lab_points,self.theory_points,self.points())
-
-students = []
-
-students.append(Student("Jan Janssens",15,17))
-students.append(Student("Piet Pieters",15,17))
-
-for student in students:
-    print(student)
-    # or alternatively print(str(student))
-~~~
-
-Returns following result:
-
-~~~
-Student Jan Janssens has 15 for lab and 0 for theory, so average of 7
-Student Piet Pieters has 15 for lab and 0 for theory, so average of 7
-~~~
-
 
 ## Functional programming
 
@@ -1639,4 +1810,3 @@ list(
      )
 )
 ~~~
-
