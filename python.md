@@ -1013,76 +1013,6 @@ change_a(10)
 print(a)
 ~~~
 
-## Exceptions
-
-~~~python
-print("Hello")
-a = 0/0
-print(a)
-~~~
-
-...causes the following error...
-
-~~~
-Hello
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-ZeroDivisionError: integer division or modulo by zero
-~~~
-
-
-~~~python
-print("Before try-catch")
-try:
-    print(0/0)
-    print(x)
-    print("After error")
-except  NameError:
-    print("A NameError-exception occurred")
-except  ZeroDivisionError:
-    print("A ZeroDivision-exception occurred")
-except:
-    print("Another error")
-else:
-    print("No problem")
-finally:
-  print("Some cleaning") 
-
-print("After try-catch")
-~~~
-
-~~~python
-print("Before try-catch")
-try:
-    print(0/0)
-    print(x)
-    print("After error")
-except  NameError:
-    print("A NameError-exception occurred")
-except  ZeroDivisionError:
-    print("A ZeroDivision-exception occurred")
-except:
-    print("Another error")
-else:
-    print("No problem")
-finally:
-  print("Some cleaning") 
-~~~
-
-
-~~~python
-import math
-
-def circumference(radius): 
-  if radius < 0:
-    raise Exception("Sorry, no numbers below zero")
-  return 2 * radius * math.pi
-
-circumference(1)  # prints +- 6,283...
-circumference(-1) # raises error
-~~~
-
-
 ## Collection
 
 
@@ -1268,8 +1198,399 @@ for student in students:
     print(student)
 ~~~
 
+## Exceptions
 
-### Functional programming
+~~~python
+print("Hello")
+a = 0/0
+print(a)
+~~~
+
+...causes the following error...
+
+~~~
+Hello
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: integer division or modulo by zero
+~~~
+
+
+~~~python
+print("Before try-catch")
+try:
+    print(0/0)
+    print(x)
+    print("After error")
+except  NameError:
+    print("A NameError-exception occurred")
+except  ZeroDivisionError:
+    print("A ZeroDivision-exception occurred")
+except:
+    print("Another error")
+else:
+    print("No problem")
+finally:
+  print("Some cleaning") 
+
+print("After try-catch")
+~~~
+
+~~~python
+print("Before try-catch")
+try:
+    print(0/0)
+    print(x)
+    print("After error")
+except  NameError:
+    print("A NameError-exception occurred")
+except  ZeroDivisionError:
+    print("A ZeroDivision-exception occurred")
+except:
+    print("Another error")
+else:
+    print("No problem")
+finally:
+  print("Some cleaning") 
+~~~
+
+
+~~~python
+import math
+
+def circumference(radius): 
+  if radius < 0:
+    raise Exception("Sorry, no numbers below zero")
+  return 2 * radius * math.pi
+
+circumference(1)  # prints +- 6,283...
+circumference(-1) # raises error
+~~~
+
+## Objects and classes
+
+So far - collections aside - we have **only worked** with  **simple** data **types** that can hold a single value such as int, float, boolean, ... among others.
+
+> Note: String was an exception to this considering that is actually a list of characters....
+
+In this section we look at classes in python, which allow us to structure data in 1 data type
+
+### Simple case: student application
+
+Suppose you want to build an an application that wants to track grades for a course, as in the table representation below.
+
+~~~
++---+---------+------------+--------+-----------+
+| id| Name    | First name | Lab    | Theory    |
++---+---------+------------+--------+-----------+
+| 1 | Jan | Janssens | 15           |        16 |
++---+---------+------------+--------+-----------+
+| 2 | Pieters | 15 | 16 |
++---+---------+------------+--------+-----------+
+| 3 | Joris | 15 | 16 |
++---+---------+------------+--------+-----------+
+| 3 | Korneel | 15 | 16 |
++---+---------+------------+--------+-----------+
+~~~
+
+
+### Structured programming with classes
+
+In Python, you can do this like in Java with classes.  
+
+A class is a **structured data type** that allows you to **group** different values (or subvariables) under a single **object**.  
+
+### Class of student
+
+Let's plug right in with our previous example to extend.  
+Applied to a student such a data type looks like this, you start each time with:
+
+* The keyword **class**
+* Followed by a **name** for this type   
+  (Student in this case)
+* Followed by a block-indicator **:**
+
+~~~python
+class Student:
+    name = ""
+    lab_points = 0
+    theory_points = 0
+~~~
+
+Then you can have this followed by 1 or more **attributes** in this case this is:
+
+* name
+* lab_points
+* theory_points
+
+These attributes are **sub-variables** that are **connected** to an instance of a **class**.
+
+> Note: later we will see that - besides attributes - we can also attach functions to a class type
+
+### Creating an object
+
+When you create a variable of such type we call it an **object**.  
+The code below:
+
+* Defines such a type
+* Instantiates an object of this type
+
+~~~python
+class Student:
+    name = ""
+    lab_points = 0
+    theory_points = 0
+
+jan = Student()
+~~~
+
+An **object** is created by a special function (Student()) called the **constructor**. 
+
+### Constructor
+
+This **constructor**:
+
+* is a **function**
+* that is **automatically** created**  
+  (if you don't create it yourself, see directly)
+* with **the same name** as the **class**
+* which you **call** to create an **object** (or instance) of the class
+
+In a moment we're also going to see that this constructor can be modified, but first let's do something with the object.
+
+### Working with attributes
+
+An object consists of attributes (name, lab_points, theory_points), as they were described in the class.  
+The example below illustrates how to use these attributes.
+
+~~~python
+class Student:
+    name = ""
+    lab_points = 0
+    theory_points = 0
+
+jan = Student()
+jan.name = "Jan Janssens"
+jan.lab_points = 15
+Jan.theory_points = 17
+
+print(jan.lab_points) # prints Jan Janssens
+print(jan.lab_points) # prints 15
+print(jan.theory_points) # prints 17
+~~~
+
+You can read and edit these variables via dot notation - object name followed by dot followed by name - just as you would with a regular variable.
+
+### Multiple objects
+
+Of course, you can then add multiple objects
+
+~~~python
+class Student:
+    name = ""
+    lab_points = 0
+    theory_points = 0
+
+jan = Student()
+jan.name = "Jan Janssens"
+jan.lab_points = 15
+jan.theory_points = 17
+
+piet = Student()
+piet.name = "Piet Pieters"
+piet.lab_points = 15
+piet.theory_points = 17
+
+print(jan.lab_points)
+print(jan.lab_points)
+print(jan.theory_points)
+
+print(piet.lab_points)
+print(piet.lab_points)
+print(piet.theory_points)
+~~~
+
+In this example, you can clearly see that the attributes are associated with the object.  
+jan.lab_points is not the same as piet.lab_points
+
+### Multiple objects in a list
+
+Let's combine the principle of classes with lists.   
+This allows you to keep a dynamic collection of students.
+
+~~~python
+class Student:
+    name = ""
+    lab_points = 0
+    theory_points = 0
+
+students = []
+
+jan = Student()
+jan.name = "Jan Janssens"
+jan.lab_points = 15
+Jan.theory_points = 17
+students.append(jan)
+
+
+piet = Student()
+piet.name = "Piet Pieters"
+piet.lab_points = 15
+piet.theory_points = 17
+students.append(piet)
+
+for student in students:
+    print(student.lab_points)
+    print(student.theory_points) 
+~~~
+
+### Constructor with arguments
+
+You can extend the constructor function with arguments.  
+You can use these arguments to initialize the attributes
+
+~~~python
+class Student:
+    def __init__(self, name, lab, theory):
+        self.name = name
+        self.lab_points = lab
+        self.theory_points = theory
+
+students = []
+
+jan = Student("Jan Janssens",15,17)
+students.append(jan)
+piet = Student("Piet Pieters",15,17)
+students.append(pieters)
+
+for student in students:
+    print(student.name + ":")
+    print(student.lab_points)
+    print(student.theory_points) 
+~~~
+
+Also note that it is no longer necessary to define the attributes, it is sufficient to associate them with self.  
+**self** is an alias/reference to the current instance of this class (Student) and is always required as the 1st argument to any **object method**.
+
+### Constructor (2)
+
+Since you keep a list, it is no longer necessary to keep separate variables.  
+You can directly add student objects/instances to the list via the constructor.
+
+~~~python
+class Student:
+    def __init__(self,name,lab,theory):
+        self.name = name
+        self.lab_points = lab
+        self.theory_points = theory
+
+students = []
+
+students.append(Student("Jan Janssens",15,17))
+students.append(Student("Piet Pieters",15,17))
+
+for student in students:
+    print(student.name + ":")
+    print(student.lab_points)
+    print(student.theory_points) 
+~~~
+
+### Constructor (3)
+
+We can also assign default arguments to this....
+
+~~~python
+class Student:
+    def __init__(self,name,lab=0,theory=0):
+        self.name = name
+        self.lab_points = lab
+        self.theory_points = theory
+
+students = []
+
+students.append(Student("Jan Janssens",15,17))
+students.append(Student("Piet Pieters",15,17))
+students.append(Student("Student without theori",15))
+
+for student in students:
+    print(student.name + ":")
+    print(student.lab_points)
+    print(student.theory_points) ) 
+~~~
+
+### Classes and Methods
+
+In addition to attributes, you can also add methods.  
+These are functions that are associated with an instance of an object; the constructor was a first special example.  
+
+In the example below, we add a method that calculates the final points of students.
+
+~~~python
+class Student:
+    def __init__(self,name,lab=0,theory=0):
+        self.name = name
+        self.lab_points = lab
+        self.theory_points = theory
+
+    def points(self):
+        return (self.lab_points + self.theory_points)/2
+
+students = []
+
+students.append(Student("Jan Janssens",15,17))
+students.append(Student("Piet Pieters",15,17))
+
+for student in students:
+    print(student.name + ":")
+    print(student.lab_points)
+    print(student.theory_points) 
+    print(student.points())
+~~~
+
+### __str__
+
+Another special method (earlier we had already seen the constructor) is the string method.  
+If you add the method __str__ it will be called automatically when you want to convert a to a string:
+
+* By using the str() operator.
+* By passing the object to the print function (which in turn calls str())
+
+~~~python
+class Student:
+    def __init__(self,name,lab=0,theory=0):
+        self.name = name
+        self.lab_points = lab
+        self.theory_points = 0
+
+    def points(self):
+        return (self.lab_points + self.theory_points)/2
+
+    def succeeded(self):
+        return points(self) >= 10    
+        
+    def __str__(self):
+        return "Student {} has {} for lab and {} for theory, so average of {}".format(
+            self.name, self.lab_points,self.theory_points,self.points())
+
+students = []
+
+students.append(Student("Jan Janssens",15,17))
+students.append(Student("Piet Pieters",15,17))
+
+for student in students:
+    print(student)
+    # or alternatively print(str(student))
+~~~
+
+Returns following result:
+
+~~~
+Student Jan Janssens has 15 for lab and 0 for theory, so average of 7
+Student Piet Pieters has 15 for lab and 0 for theory, so average of 7
+~~~
+
+
+## Functional programming
 
 ~~~python
 l = [1,2,3,4,5,6,7,8]
