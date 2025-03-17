@@ -1,5 +1,11 @@
 # From Python to Java
 
+Goal: 
+
+* Give a quick overview of why and when it's interesting to use Python
+* From Java to Python
+* Some tools and examples
+
 ## Getting started with a "Hello World"
 
 ### Let's start with Java...
@@ -844,8 +850,7 @@ Now we know how code blocks are used lets dive in control-constructs in Python
 | <=         | smaller or equal       |
 | >=         | bigger or equal        |
 
-
-Same as in Java they compare 2 numbers and do return a boolean as result
+Same as in Java, Python compares 2 numbers/objects and returns a boolean as result
 
 ~~~python
 a = 5
@@ -908,7 +913,7 @@ else:
 
 ### Ternary expression vs if expression
 
-In Java there's is a shorthand for if-else you can use for retrieving values called
+In Java there's is a **shorthand** for **if-else** you can use for retrieving values called
 the ternary operator as shown below.
 
 ~~~java
@@ -921,13 +926,15 @@ public class Hello {
 }
 ~~~
 
-The counterpart in Python is a conditional expression as shown below.
+The **counterpart** in **Python** is a **conditional expression** as shown **below**.
 
 ~~~python
 i = 5
 result = "positive" if i > 0 else "negative"
 print(result)
 ~~~
+
+The syntax of this construct seems to be pretty natural...
 
 
 ### Switch - case vs match - case
@@ -1036,8 +1043,6 @@ print("Hello", end="")
 print("World")
 ~~~
 
-
-
 ### Reading input from command line
 
 First thing, how to write to and read data from the command line?
@@ -1130,7 +1135,38 @@ password = getpass.getpass()
 print(f"Your password is {password}")
 ~~~
 
-### Reading and writing
+### Reading and writing text-files
+
+Reading a text-file Java as shown below...
+
+~~~Java
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class ReadAFile {
+
+ public static void main(String[] args) throws IOException{
+        BufferedReader fileReader = new BufferedReader(
+                                        new InputStreamReader(
+                                            new FileInputStream("sample.txt")));
+        System.out.println(fileReader.readLine());
+        fileReader.close();
+    }
+}
+~~~
+
+...is a little bit more **condense** in Python, no complex decorating of InputStream and Readers...
+
+~~~python
+read_file = open("sample.txt", "r")
+print(read_file.read())
+read_file.close()
+~~~
+
+After use, it is important to **close** this **file object** - as it is in Java - with the operation close.  
+This is because the operating system can lock the file for use from other programs as long as this file object is open.
 
 ~~~python
 filename = "test.txt"
@@ -1143,7 +1179,324 @@ write_file.close()
 read_file = open(filename, "r")
 for line in read_file.read().splitlines():
     print(line)
+
+print(read_file.closed, write_file.closed)
+read_file.close()
+print(read_file.closed, write_file.closed)
 ~~~
+
+#### Relative vs absolute
+
+Previous example opened a file that is in the same directory from which you run the python program.
+You can also say that this file is **relative** to the path where your application is executed.
+
+If there is a the file in a subdirectory from which your program is executed you can describe a path as follows:
+
+~~~python
+f = open("subdirectory/demofile.txt")
+# Some operations...
+f.close()
+~~~
+
+In addition if you want to describe an exact path
+
+~~~python
+f = open("/home/bart/demofile.txt")
+# Some operations...
+f.close()
+~~~
+
+(and to please the Windows users)
+
+~~~python
+f = open("c:\users\bart\demofile.txt")
+f.close()
+~~~
+
+#### Modes
+
+
+A first notion you need to know is the use of modes when opening a file:
+
+* "r" - Read
+* "x" - Create - creates a file and returns an error if the file already exists
+* "a" - Append - creates a file if it does not exist, all writes are appends
+* "w" - Write - creates a file if it does not yet exist, overwrites existing file
+
+You can **pass** this **mode** as a **2nd** (optional) **argument**
+
+~~~python
+with open("demofile.txt", "r") as f:
+  print(f.read()) 
+~~~
+
+If you don't add this **2nd argument**, the **default** mode is **r** (read-only) 
+
+#### Binary mode
+
+In addition to read/write/append you can use modes also to indicate text vs binary mode.  
+At the first line in below code-snippet **b** is used to indicate that we want to read in binary mode
+
+~~~python
+read_file = open("test.txt", "rb")
+print(f"Type when opening in binary mode: {type(read_file)}")
+print(read_file.read())
+read_file.close()
+
+read_file = open("test.txt", "r")
+print(f"Type when opening in text mode: {type(read_file)}")
+print(read_file.read())
+read_file.close()
+~~~
+
+If you look at the output of the snippet, you might see that open creates different implementations in the background
+depending on the mode you passed around as argument...
+
+~~~
+Type when opening in binary mode: <class '_io.BufferedReader'>
+b'Hello\nFile!\n'
+Type when opening in text mode: <class '_io.TextIOWrapper'>
+Hello
+File!
+~~~
+
+### Reading from a text-file 
+
+To demonstrate how to handle a text-file start by creating a file called **demofile.txt** with the following (meaningless) content:
+
+~~~
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+Aenean commodo ligula eget dolor. Aenean massa. 
+Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. 
+Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. 
+Integer tincidunt. Cras dapibus. 
+Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. 
+Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. 
+Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. 
+Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui
+~~~
+
+#### Read out entire content
+
+You can retrieve the entire contents of a text file via the read function.
+
+~~~python
+with open("demofile.txt", "r") as f:
+  print(f.read()) 
+~~~
+The above will print the entire text (as above).
+
+You can also limit yourself to the number of bytes (in case of text files the characters)
+
+~~~python
+with open("demofile.txt", "r") as f:
+  print(f.read(5)) 
+  print(f.read(5)) 
+~~~
+
+Bemerk ook dat de positie tot waar je al hebt gelezen wordt bijgehouden in het file-object
+
+~~~
+Lorem
+ ipsu
+~~~
+
+#### Read line by line
+
+You can also choose to read out line by line.
+
+~~~python
+with open("demofile.txt", "r") as f:
+  print(f.readline())
+  print(f.readline()) 
+~~~
+
+The above code will print the 2 first lines.
+
+~~~
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+Aenean commodo ligula eget dolor. Aenean massa.
+~~~
+
+#### Running through all lines
+
+The file object can also behave like a list of lines;  
+On this object you can then execute a loop through the entire file.
+
+~~~python
+with open("demofile.txt", "r") as f:
+  for x in f:
+    print(x) 
+~~~
+
+~~~
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+Aenean commodo ligula eget dolor. Aenean massa. 
+Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+...
+~~~
+
+### Writing to a a file
+
+For writing to a file, there are 3 main modes we need to understand:
+
+* Writing a new file => x (returns an error if it already exists)
+* Overwriting an existing file => w
+* Add to the end of a file => a
+
+#### Creating a new file
+
+The first scenario is that we want to create a new file.  
+In this case, we use the mode **x**
+
+~~~python
+with open("hello.txt", "x") as f:
+  f.write("This is a new file!!!")
+with open("hello.txt", "r") as f:
+  print(f.read()) 
+~~~
+
+If the file should not yet exist, a new hello.txt file will be created
+
+~~~
+$ python3 create_new_file.py
+This is a new file!!!
+$
+~~~
+
+Should this file already exist, for example by running the program a 2nd time an exception will be raised by the open function
+
+~~~
+$ python3 create_new_file.py
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>.
+FileExistsError: [Errno 17] File exists: 'hello.txt'
+$
+~~~
+
+#### New file or overwrite existing file
+
+If we change the same code to use the mode **w**:
+
+* no error** will be raised if the **file already exists**
+* but it will be **overwritten**
+* if it does **not exist** it will be **created**
+
+Code below:
+
+~~~python
+with open("hello.txt", "w") as f:
+  f.write("This is a new file!!!")
+with open("hello.txt", "r") as f:
+print(f.read()) 
+
+with open("hello.txt", "w") as f:
+f.write("The file has been overwritten!!!")
+with open("hello.txt", "r") as f:
+  print(f.read()) 
+~~~
+
+* Will create the file first (if it doesn't already exist)
+* And then overwrite the contents
+
+~~~
+$ python3 create_new_file.py
+This is a new file!!!
+The file has been overwritten
+
+$
+~~~
+
+#### Add to the end of the text-file
+
+~~~python
+with open("hello.txt", "w") as f:
+  f.write("This is a new file!!!")
+with open("hello.txt", "r") as f:
+  print(f.read()) 
+
+with open("hello.txt", "a") as f:
+  f.write("This line has been added!!!")
+with open("hello.txt", "r") as f:
+  print(f.read()) 
+~~~
+
+~~~
+$ python3 append_to_file.py
+This is a new file!!!
+
+This is a new file!!!
+This line has been added!!!
+$
+~~~
+
+#### Check if the file exists
+
+You can avoid this exception by checking if this file already exists, which you can do with the exists() function
+Thus, you can improve the above code by shielding the remove() call with an if clause
+
+~~~python
+import os
+if os.path.exists("demofile.txt"):
+  os.remove("demofile.txt")
+else:
+  print("The file does not exist") 
+~~~
+
+#### Deleting a directory
+
+To remove a directory you need to use the rmdir() function
+
+~~~python
+import os
+os.rmdir("a_folder") 
+~~~
+
+* Note that this will fail if the directory does not exist 
+
+~~~
+...
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>.
+FileNotFoundError: [Errno 2] No such file or directory: 'a_folder'
+>>> 
+~~~
+
+> To avoid this you can use os.path.exists()
+
+* If the directory is not empty you will also get an error
+
+~~~
+...
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+OSError: [Errno 39] Directory not empty: 'a_folder'
+~~~
+
+#### Further info
+
+There are still many ways to edit files and directories.  
+To learn about them please visit https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files
+
+
+### With statement
+
+In modern Java you're supposed to open **"closeable resources"** with a try-with-resources as shown below
+
+~~~Java
+public class Hello {
+    public static void main(String[] args) {
+        try (FileReader fr = new FileReader("hello.txt");
+                BufferedReader br = new BufferedReader(fr)) {
+            return br.readLine();
+        }
+    }
+}
+~~~
+
+The **equivalent operation** in Python is:
 
 ~~~python
 filename = "test.txt"
@@ -1156,6 +1509,8 @@ with open(filename, "r") as read_file:
   for line in read_file.read().splitlines():
       print(line)
 ~~~
+
+Same as in Java this will make sure **close** the **resource** automatically within the with-block
 
 ## Functions
 
@@ -1693,13 +2048,18 @@ print(x==z)
 
 ## Exceptions and error-handling
 
+### Python uses exceptions
+
+As in Java, Python uses exceptions to stop execution if specific conditions are met or not met
+like the 0-division below.. 
+
 ~~~python
 print("Hello")
 a = 0/0
 print(a)
 ~~~
 
-...causes the following error...
+...causing the following error...
 
 ~~~
 Hello
@@ -1708,45 +2068,215 @@ Traceback (most recent call last):
 ZeroDivisionError: integer division or modulo by zero
 ~~~
 
+In this case, we see that an **error** is also clearly indicated, in this case a **ZeroDivisionError**.  
+
+### An exception stops the program
+
+Do note that the **code** that comes **before the error** (a = 0/0) does **execute** (print("Hello")).
+
+The program does **start** but stops** at the **indicated point of error**.
+
+Unlike a syntax error, a python program cannot determine when parsing Python code that there is honor error.
+
+### Exceptions and functions
+
+There is also no difference if you generate this **error** within a function, this **error** is **propagated** as long as it is not caught.
+
+~~~python
+def divide(a,b):
+  return a/b
+
+print("Hello")
+a = divide(0,0)
+print(a)
+~~~
+
+resulting in
+
+~~~
+Hello
+Traceback (most recent call last):
+  File "tmp.py", line 5, in <module>
+    a = divide(0,0)
+  File "tmp.py", line 2, in divide
+    return a/b
+ZeroDivisionError: division by zero
+~~~
+
+### Catch exceptions
+
+You can make sure in your code that these **exceptions** are **caught** without terminating the program.
+
+This can be done via a **try-block** in combination with **except-block**  
+In the code below, we are trying to print a variable that does not exist.  
 
 ~~~python
 print("Before try-catch")
 try:
-    print(0/0)
-    print(x)
-    print("After error")
-except  NameError:
-    print("A NameError-exception occurred")
-except  ZeroDivisionError:
-    print("A ZeroDivision-exception occurred")
+  print(x)
+  print("After error")
 except:
-    print("Another error")
-else:
-    print("No problem")
-finally:
-  print("Some cleaning") 
-
+  print("An exception occurred")
 print("After try-catch")
 ~~~
 
+We can do this using a default **except-block**, this is going to catch any error (other than SyntaxError).
+
+This results in the following execution...
+
+~~~
+Before try-catch
+An exception occured
+After try-catch
+~~~
+
+We see here that:
+
+* The **program** is **executed**
+* The **try-block** is **interrupted** (at print(x))
+* The **except** is **executed**
+* The **code continues** running **after** the **except**
+
+### Catch Exceptions by Type
+
+You can also specify the **type of exception** you want to catch.  
+In this case you limit the trapping to a specific error, the NameError
+
 ~~~python
 print("Before try-catch")
 try:
-    print(0/0)
-    print(x)
-    print("After error")
-except  NameError:
-    print("A NameError-exception occurred")
-except  ZeroDivisionError:
-    print("A ZeroDivision-exception occurred")
-except:
-    print("Another error")
-else:
-    print("No problem")
-finally:
-  print("Some cleaning") 
+  print(x)
+  print("After error")
+except NameError:
+  print("An exception occurred")
+print("After try-catch")
 ~~~
 
+It suffices here to define the type after the except keyword.
+
+However, if you generate another error (for example, a ZeroDivisionError)...
+
+~~~python
+print("Before try-catch")
+try:
+  print(0/0)
+  print(x)
+  print("After error")
+except NameError:
+  print("An exception occurred")
+print("After try-catch")
+~~~
+
+...However, this will not be caught...
+
+~~~
+ZeroDivisionError: integer division or modulo by zero
+~~~
+
+...and the program is terminated (prints thereafter are not printed)
+
+### Multiple except blocks
+
+To fix this problem - and accommodate multiple exceptions - you can place multiple except-blocks.  
+By placing the following except-block on ZeroDivisionError you avoid terminating the program.
+
+~~~python
+print("Before try-catch")
+try:
+  print(0/0)
+  print(x)
+  print("After error")
+except NameError:
+  print("A NameError-exception occurred")
+except ZeroDivisionError:
+  print("A ZeroDivision-exception occurred")
+print("After try-catch")
+~~~
+
+You can also add the the **default** except-block to this
+
+~~~python
+print("Before try-catch")
+try:
+  print(0/0)
+  print(x)
+  print("After error")
+except  NameError:
+  print("A NameError-exception occurred")
+except  ZeroDivisionError:
+  print("A ZeroDivision-exception occurred")
+except:
+  print("Another error")
+print("After try-catch")
+~~~
+
+In that case, all error will be caught (but the message will be different in case of NameError or ZeroDivisionError)
+
+### finally
+
+As in Java, Python supports the finally-blocks allowing you to clean up
+
+~~~python
+try:
+  print(0/0)
+except:
+  print("Something went wrong when writing to the file")
+finally:
+  print("Some cleaning")
+~~~
+
+In the case below the execution will fail (because of lacking the write-modus)
+
+~~~python
+try:
+  f = open("demofile.txt")
+  f.write("Lorum Ipsum")
+except:
+  print("Something went wrong when writing to the file")
+finally:
+  f.close() 
+~~~
+
+Take however into account that it's preferrable to use the with-statement
+
+~~~python
+try:
+    with open("demofile.txt", "r") as f:
+        f.write("Lorum Ipsum")
+except:
+  print("Something went wrong when writing to the file")
+~~~
+
+> Make sure in not putting the try-except inside the with-statement, otherwise the
+> file will not close...
+
+### else (vs finally)
+
+Something that doesn't exist in Java is an else-block that can be added to a try-block.  
+**else** is the **counter-part** of **expect** in that it will only execute it's code **only** 
+when no excpetion occurs from the try-block
+
+~~~python
+try:
+  print(0/0)
+except:
+  print("Something went wrong when writing to the file")
+else:
+  print("Only when no exeptions")
+finally:
+  print("Always")
+~~~
+
+This is **different** from **finally** as finally will always execute...
+
+### Raise exceptions yourself
+
+In addition to catching exceptions, you can also raise them yourself with the keyword **raise**.
+
+Practically, suppose you create a function:
+
+* That calculates the area of a circle.
+* However, you do not want negative input
 
 ~~~python
 import math
@@ -1756,10 +2286,81 @@ def circumference(radius):
     raise Exception("Sorry, no numbers below zero")
   return 2 * radius * math.pi
 
-circumference(1)  # prints +- 6,283...
+circumference(1) # prints +- 6,283...
 circumference(-1) # raises error
 ~~~
 
+The function call on the last line will crash and terminate the program.
+
+~~~
+6.283185307179586
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>.
+  File "<stdin>", line 3, in circumference
+Exception: Sorry, no numbers below zero
+~~~
+
+### Create your own (custom) exceptions
+
+~~~python
+import math
+
+class RadiusException(Exception):
+  pass
+
+def circumference(radius): 
+  if radius < 0:
+    raise RadiusException()
+  return 2 * radius * math.pi
+
+circumference(1) # prints +- 6,283...
+circumference(-1) # raises error
+~~~
+
+### And catch...
+
+You can then catch this exception by type as we have seen before.
+
+~~~python
+import math
+
+class RadiusException(Exception):
+  pass
+
+def circumference(radius): 
+  if radius < 0:
+    raise RadiusException()
+  return 2 * radius * math.pi
+
+try:
+  circumference(1) # prints +- 6,283...
+  circumference(-1) # raises error
+except RadiusException:
+  print("Problem with radius...")
+~~~
+
+Then suppose you would still raise another exception....
+
+~~~python
+import math
+
+class RadiusException(Exception):
+  pass
+
+def circumference(radius): 
+  if radius < 0:
+    raise RadiusException()
+  return 2 * radius * math.pi
+
+try:
+  a = 5/0
+  circumference(1)  # prints +- 6,283...
+  circumference(-1) # raises error
+except RadiusException:
+  print("Problem with radius...")
+~~~
+
+... this will not be catches ...
 
 ## Functional programming
 
