@@ -4,7 +4,6 @@ Goal:
 
 * Give a quick overview of why and when it's interesting to use Python
 * From Java to Python
-* Some tools and examples
 
 ## Getting started with a "Hello World"
 
@@ -729,7 +728,7 @@ e.g. the following example...
 ~~~Java
 public class HelloFormatting {
     public static void main(String[] args) {
-        String baseString = "Hello %s! This course takes about %,d minutes.";
+        String baseString = "Hello %s! This course takes about %d minutes.";
         String target = "World";
         int minutes = 120;
         String result = String.format(baseString, target, minutes);
@@ -2167,7 +2166,13 @@ As a list a tuple keeps its original ordering and can contain multiple datatypes
 
 ### Collection destructuring/unpacking
 
-Tuples are often used in combination with collection destructuring
+Like in other programming languages you can assign more then one variable at a time on a single line in Python
+
+~~~python
+first, last = "hello", "world"
+~~~
+
+This can be also used to unpac tuples (and other collections)
 
 ~~~python
 first, last = ("hello", "world")
@@ -2175,7 +2180,14 @@ print(first)
 print(last)
 ~~~
 
-### Enumerate
+### Destructuring in for loops with enumerate
+
+A nice sample of destructuring is enumerate.  
+This function takes an iterable collection as an argument and returns 
+an enumerate object containing a tuple for each item in the collection.  
+
+Each tuple contains a counter value, which increments with each iteration, 
+along with a value from the provided collection.
 
 ~~~python
 punten = [15,16,8,9]
@@ -2202,7 +2214,6 @@ a_student = Student('Bart', '49', '2541997')
 print(f"The Student age using index is {a_student[1]}: ")
 print(f"The Student name using keyname is {a_student.name}: ")
 ~~~
-
 
 ## Objects and classes
 
