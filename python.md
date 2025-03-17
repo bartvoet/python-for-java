@@ -2364,10 +2364,316 @@ except RadiusException:
 
 ## Functional programming
 
+Python supports the functional paradigm for a very long time (long time before Java).  
+In this part we make a (quick) comparison with the Streams-functionality by revisiting some examples of:
+
+* Streams.map
+* Streams.filter
+* Streams.reduce
+
+to it's Python counterparts
+
+### lambda-functions in Python
+
+Let's start with lambda-functions in Java lambda's are defined and called 
+as functional interfaces as shown below:
+
+~~~java
+import java.util.function.Function;
+
+public class SampleFunction {
+
+    public static void main(String[] args) {
+        System.out.println(execute((n) -> n * 10, 5));
+    }
+
+    public static int execute(Function<Integer, Integer> function, int number) {
+        return function.apply(number);
+    }
+}
+
+~~~
+
+In Python the same concept is applied
+
+~~~python
+def execute(a_function, number):
+    return a_function(number)
+
+print(execute(lambda x: x * 10, 5 ))
+~~~
+
+Basically you:
+
+* Start with the lambda-keyword
+* Followed by one or more arguments
+* Followed by an expression
+
+
+### Function reference
+
+A lambda is anomynous function, in case an existing function already
+provides for you can use a function-reference like below:
+
+~~~java
+import java.util.function.Function;
+
+public class Hello {
+
+    public static void main(String[] args) {
+        System.out.println(execute(Hello::aFunction, 5));
+    }
+
+    public static int aFunction(int x) {
+        return x * 10;
+    }
+
+    public static int execute(Function<Integer, Integer> function, int number) {
+        return function.apply(number);
+    }
+}
+~~~
+
+In Python you just pass in the name of the function
+
+~~~python
+def execute(a_function, number):
+    return a_function(number)
+
+def a_function(x):
+    return x * 10
+
+print(execute(a_function, 5 ))
+~~~
+
+In case of a method you just pass on the member of the object:
+
+~~~python
+def execute(a_function, number):
+    return a_function(number)
+
+class Test:
+    def aFunction(self, x):
+        return x * 10
+
+t = Test()
+
+print(execute(t.aFunction, 5 ))
+~~~
+
+
+### Streams.map vs map
+
+First one is map, allowing you transform a stream in another stream presenting other values (and even types).  
+Let's start with a simple example that transforms an IntStream to it's multiplication by 2.
+
+~~~Java
+import java.util.stream.IntStream;
+
+public class Hello {
+
+ public static void main(String[] args) {
+        IntStream numbers = IntStream.of(1,2,3,4,5,6,7,8,9);
+        numbers.map((i) -> i * 2).forEach(System.out::println);
+    }
+}
+~~~
+
+In Python you don't need to convert to a Stream, but you call
+directly upon the first class map()-operations
+
+~~~python
+l = [1,2,3,4,5,6,7,8]
+for i in (map(lambda x: x * 2, l)):
+    print(i)
+~~~
+
+As in Java map accepts a function (anomynous or reference)
+
+
+### Stream to List
+
+In Java you can collect or invoke directly toList() to collect the
+result of a stream to a list.
+
+~~~java
+import java.util.List;
+import java.util.stream.IntStream;
+
+public class Hello {
+
+ public static void main(String[] args) {
+        IntStream numbers = IntStream.of(1,2,3,4,5,6,7,8,9);
+        List<Integer> list = numbers.map((i) -> i * 2).boxed().toList();
+        System.out.println(list);
+    }
+}
+~~~
+
+In Python this is supported a simple cast as shown below
+
 ~~~python
 l = [1,2,3,4,5,6,7,8]
 print(list(map(lambda x: x * 2, l)))
 ~~~
+
+
+### Filtering
+
+The next operation we use is filter.  
+We extend the previous example with a filtering to a stream of numbers bigger than 4.
+
+
+~~~java
+import java.util.stream.IntStream;
+
+public class Hello {
+
+ public static void main(String[] args) {
+        IntStream numbers = IntStream.of(1,2,3,4,5,6,7,8,9);
+        numbers.filter((i) -> i > 4)
+                .map((i) -> i * 2)
+                .forEach(System.out::println);
+    }
+}
+~~~
+
+In Python this is done by wrapping the result of the filter as an argument of map
+
+~~~python
+l = [1,2,3,4,5,6,7,8,9]
+for i in (map(lambda x: x * 2, filter(lambda x: x > 4, l))):
+    print(i)
+~~~
+
+### Ranges
+
+For convenience we swich to an range for this
+
+~~~java
+import java.util.stream.IntStream;
+
+public class Hello {
+
+ public static void main(String[] args) {
+        IntStream.rangeClosed(1, 9).filter((i) -> i > 4)
+                .map((i) -> i * 2)
+                .forEach(System.out::println);
+    }
+}
+~~~
+
+Pay attention, a range in Python is non-closed
+
+~~~python
+for i in (filter(lambda x: x > 4, map(lambda x: x * 2, range(1,9 + 1)))):
+    print(i)
+~~~
+
+### Reduce
+
+Another key-concept of Streams is reduce, this allow you to collect or gather aggregates on streams.  
+So imagine you want the total of the previous filter/map-combination you can can add a reduce-function.
+
+~~~java
+import java.util.stream.IntStream;
+
+public class Hello {
+
+ public static void main(String[] args) {
+        System.out.println(
+            IntStream.rangeClosed(1, 9).filter((i) -> i > 4)
+                .map((i) -> i * 2)
+                .reduce((a,b) -> a + b)
+                .orElse(0));
+    }
+}
+~~~
+
+In Python the same function does exists with the same semantics as shown below
+
+~~~python
+from functools import reduce
+
+print(reduce(lambda x,y: x + y,
+             filter(lambda x: x > 4, 
+                    map(lambda x: x * 2, range(1,9 + 1)))))
+~~~
+
+### reduce on empty streams (without initial value)
+
+One of the the nice things in the Java-version is that it make use of **Optional** to indicate
+the precense of data in the stream on which the reduce is applied.
+
+~~~java
+import java.util.stream.IntStream;
+
+public class Hello {
+
+ public static void main(String[] args) {
+        System.out.println(
+            IntStream.of().filter((i) -> i > 4)
+                .map((i) -> i * 2)
+                .reduce((a,b) -> a + b)
+                .orElse(0));
+    }
+}
+~~~
+
+Python's reduce doesn't offer this feature so in case you pass an empty collection
+an error will be spawn.
+
+~~~python
+from functools import reduce
+
+print(reduce(lambda x,y: x + y,
+             filter(lambda x: x > 4, 
+                    map(lambda x: x * 2, []))))
+~~~
+
+...as it's shown below
+
+~~~
+Traceback (most recent call last):
+  File "/home/bart/Projects/python-for-java/test.py", line 3, in <module>
+    print(reduce(lambda x,y: x + y,
+TypeError: reduce() of empty iterable with no initial value
+~~~
+
+> Python has a (less powerfull) **equivalent** of Java's Optional called **union**
+
+### reduce on empty streams (with initial value)
+
+However for Python there is the possibility of passing in an start-value.  
+In this case, this initial value will be returned in case of an empty collection
+(in stead of the error).
+
+~~~python
+from functools import reduce
+
+print(reduce(lambda x,y: x + y,
+             filter(lambda x: x > 4, 
+                    map(lambda x: x * 2, [])), 0))
+~~~
+
+By the way, Java **supports** the **same** **feature** and will not return an **Optional**
+in case an **initial** value is passed along to reduce.
+
+~~~java
+import java.util.stream.IntStream;
+
+public class Hello {
+
+ public static void main(String[] args) {
+        System.out.println(
+            IntStream.of().filter((i) -> i > 4)
+                .map((i) -> i * 2)
+                .reduce(0, (a,b) -> a + b));
+    }
+}
+~~~
+
+### List comprehensions
 
 ~~~python
 l = [1,2,3,4,5,6,7,8]
@@ -2380,10 +2686,7 @@ column = [row[1] for row in data]
 print(column) # output: [2, 5, 8]
 ~~~ 
 
-~~~python
-l = [1,2,3,4,5,6,7,8]
-print(list(filter(lambda x: x > 4, map(lambda x: x * 2, l))))
-~~~
+
 
 ~~~python
 data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -2391,11 +2694,7 @@ column = [row[1] for row in data]
 print(column) # output: [2, 5, 8]
 ~~~
 
-~~~python
-from functools import reduce
 
-reduce(lambda x,y: x + y,filter(lambda x: x > 4, map(lambda x: x * 2, l)))
-~~~
 
 ~~~python
 print(sum(filter(lambda x: x > 4, map(lambda x: x * 2, l))))
