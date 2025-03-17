@@ -1664,16 +1664,9 @@ change_a(10)
 print(a)
 ~~~
 
-## Collections
+## Lists
 
-
-### List
-
-~~~python
-listOfNumbers = [1,2,3,4]
-for i in listOfNumbers:
-    print(i)
-~~~
+Same as in Java...
 
 ~~~java
 public class ListOfNumbersDemo {
@@ -1687,29 +1680,499 @@ public class ListOfNumbersDemo {
 }
 ~~~
 
-### Slicing
+... provides Python support for Lists.
 
 ~~~python
-l = [0,1,2,3,4]
-print(l[1:])
-print(l[1:3])
-print(l[:3])
-print(l[1:-1])
-print(l[:-1])
+listOfNumbers = [1,2,3,4]
+for i in listOfNumbers:
+    print(i)
+~~~
+
+A python list initialised with square brackets and provides support for objects belonging to multilple types
+
+~~~python
+x = [1.0, 2.0, 3.0]
+y = ["a", "list", "or", "strings"]
+z = ["a",1, "mixed",3.0, "list"]
+~~~
+
+Or you can create your a list of lists...
+
+~~~python
+x = [[1.0, 2.0, 3.0],["a",1, "mixed",3.0, "list"]]
+~~~
+
+> Python doesn't provide direct support for arrays (unless you're using frameworks like Numpy)
+
+### Dimension of the list
+
+A first action we can perform is to query the size or dimension of this list.  
+For that, there exists a generic (not only for lists) function len()z
+
+~~~python
+x = [1.0, 2.0, 3.0]
+y = ["a", "list", "of", "strings"]
+z = []
+print(len(x)) # prints 3
+print(len(y)) # prints 4
+print(len(z)) # prints 0
+~~~
+
+### Empty list
+
+So an empty list is also possible ...
+
+~~~python
+x = []
+len(x) # prints 0
+~~~
+
+which is then just a list of length 0
+
+### Extracting data from a list (index)
+
+To work with such a list you must be able to extract data from it.  
+To address data from a list, we work with the concept of **indexing** as like it is with Java-arrays.
+
+By **index** we mean the **position** of the **element within** this **list**.  
+
+~~~python
+x = [1.0, 2.0, 3.0]
+y = ["a", "list", "or", "strings"]
+print(x[0])
+print(y[1])
+~~~
+
+Same as in other languages everyting is 0-indexed
+
+### Indexering vs range
+
+Stel dat je toch een index adresseert > n -1 zal Python een error genereren.
+
+Volgende code ...
+
+~~~python
+x = [1, 2, 3]
+print(x[3])   # raises IndexError
+~~~
+
+... genereert een IndexError
+
+~~~
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+IndexError: list index out of range
+~~~
+
+### Modify data in a list (index) 
+
+You can modify an element of a list in a similar way.  
+You again use the same indexing mechanism, but apply it in an **assignment-statement**
+
+~~~python
+x = [1.0, 2.0, 3.0]
+print(x[1]) # prints 2.0
+x[2]=10
+print(x[2]) # prints 10
+~~~
+
+### Negative indexes
+
+In Python you can also use negative indexes, here you simply reverse the indexing....  
+The idea is that you subtract from the dimension or length...
+
+~~~python
+x = [0,1,2,3,4,5,6,7,8,9]
+print(x[-1]) # prints 9 => position/index 10 - 1 = 9
+print(x[-3]) # prints 7 => position/index 10 - 3 = 7
+~~~
+
+### Run through lists (retry...)
+
+Indeed, you can also use the for-loop, which we used earlier in combination with range
+
+~~~python
+x = [0,1,2,3,4,5,6,7,8,9]
+for n in x:
+    print(n)
+~~~
+
+
+### Slicing
+
+You can also take a piece from such a list, this is called slicing.
+
+~~~python
+x = [0,1,2,3,4,5,6,7,8,9]
+for n in x[2:4]:
+    print(n)
+# prints 2 and 3
+~~~
+
+The first index is the starting index, note the **2nd index** is **not inclusive**!!!
+
+#### Slicing with negative indexes
+
+You can also use negative indexes here:
+
+~~~python
+x = [0,1,2,3,4,5,6,7,8,9]
+for n in x[2:-2]:
+    print(n)
+# print from 2 to 7
+~~~
+
+#### Slicing with default
+
+You can also leave out the first and second part of a slice like below
+
+~~~python
+x = [0,1,2,3,4,5,6,7,8,9]
+for n in x[:-2]:
+    print(n)
+# print from 0 to 7
+~~~
+
+In the snippet below we leave out the last part...
+
+~~~python
+x = [0,1,2,3,4,5,6,7,8,9]
+for n in x[2:]:
+    print(n)
+# print from 2 to 9
+~~~
+
+### List-operations
+
+You can also expand a list once created:
+
+* append(): add element to end of list
+* extend(): add the same but another list or iterable at once 
+* count(): number of elements with a certain value  
+* index(): index the first element for a specific value
+* insert(): add element at a specific position
+* pop() : remove element on an inde
+* remove() : delete first item with a specified value Removes the first item with the specified value
+* reverse() : inverts the order of items/elements
+* sort() : sort the list
+
+See the following sequence in the console
+
+~~~python
+>>> car_park = ["Lada", "Skoda", "Lambo"]
+>>> print(car_park)
+['Lada', 'Skoda', 'Lambo']
+>>> print(len(car_park))
+3
+>>> car_park.append("Ferrari")
+>>> print(car_park)
+['Lada', 'Skoda', 'Lambo', 'Ferrari']
+>>> car_park.remove("Lambo")
+>>> print(car_park)
+['Lada', 'Skoda', 'Ferrari']
+>>> car_park.pop(1)
+'Skoda'
+>>> print(car_park)
+['Lada', 'Ferrari']
+>>> car_park.insert(1, "Volvo")
+>>> print(car_park)
+['Lada', 'Volvo', 'Ferrari']
+>>> car_park.reverse()
+>>> print(car_park)
+['Ferrari', 'Volvo', 'Lada']
+>>> car_park.sort()
+>>> print(car_park)
+['Ferrari', 'Lada', 'Volvo']
+>>> del car_park[:]
+>>> print(car_park)
+[]
+>>>
 ~~~
 
 ### Concatenating lists
+
+Concatenating 2 lists can be performed by the +-operator 
 
 ~~~python
 print([0,1,2,3,4] + [5,6,7])
 ~~~
 
-### Collection destructuring/unpacking
+## Working with dictionaries
+
+### Dictionaries => key and value
+
+In the case of a list use the index as **key** to retrieve an element....  
+For example, in case of students, it would be more natural to use the students' names to perform this mapping (then you don't have to remember the ids).  
+
+There are **dictionaries** (equivalent in Java is Map) for this purpose.  
+These are - like lists - **data structures** to which you can add **multiple objects or items**.  
+
+The difference, however, is that each **value** you add must be accompanied by a **key**.  
+You then use this afterwards to retrieve these values as demonstrated in the code below:
 
 ~~~python
-a, b = 5, 8
-print(a)
-print(b)
+student_points = {
+  “John": 12,
+  “Pete": 15,
+  “Joris": 16,
+  “Korneel": 18
+}
+
+print(student_points[“Jan”]) #prints 12
+print(student_points)
+~~~
+
+The dictionary above (student_points) maps the students' names to points, we speak here of **keys** (or keys) vs. the **values** or values.
+
+Upon execution of the code you see:
+
+* You can retrieve the **value** **from an entry by placing the **key** **between** **square brackets**
+* The following ouput prints the entire contents of the dictionarry
+
+Both keys and values can be any type, there is **no restriction of type**.  
+In this case we have used strings as keys but this can also be an integer or even an object.
+
+### Keys are unique
+
+What is important is that there **cannot be 2 different entries** with the same **key** **within** a **dictionary**.  
+The code below demonstrates this:
+
+~~~python
+student_points = {
+  “John": 12,
+  “Pete": 15,
+  “Joris": 16,
+  “Korneel":18,
+  “Jan":14
+}
+
+print(student_points[“Jan”]) # prints 14
+print(student_points)
+~~~
+
+Jan is defined 2 times as a key here.  
+The **last** value (14) will **override** the **first** value (12).
+
+### Add value to a dictionary
+
+You can also **add** a student to this **dictionary**, for example, below we add a student with the key (name) “Bart”
+
+~~~python
+student_points = {
+  “John": 12,
+  “Piet": 15,
+  “Joris": 16,
+  “Korneel": 18
+}
+
+print(student_points[“Jan”])
+print(student_points)
+
+student_points[“Bart”] = 12
+print(student_points[“Bart”])
+print(student_points)
+~~~
+
+Resulting in an additional student_points being **added**.
+
+### Update value within a dictionary
+
+You can **add** as well as **update** the same value.
+
+~~~python
+student_points = {
+  “John": 12,
+  “Pete": 15,
+  “Joris": 16,
+  “Korneel": 18
+}
+
+print(student_points[“Pete”])
+student_points[“Pete”] = 16
+print(student_points[“Pete”])
+~~~
+
+Here the **previous value** is going to be **overwritten** automatically....
+
+~~~bash
+$ python3 dictionary_demo.py
+15
+16
+~~~
+
+### Delete value from a dictionary
+
+Besides **add** and **change**, you can also **delete** such a key/value pair.  
+For this, the **keyword** **del** exists in Python.
+
+Suppose we want to delete a student below, this can be done as follows:
+
+~~~python
+student_points = {
+  “John": 12,
+  “Pete": 15,
+  “Joris": 16,
+  “Korneel": 18
+}
+print ("Before: ”, student_points)
+del student_points[“Pete”]
+print ("After: ”, student_points)
+~~~
+
+After deleting the entry with the key Pete it disappears from the dictionary
+
+~~~bash
+$ python3 dictionary_demo.py
+Before: {'Jan': 12, 'Piet': 15, 'Joris': 16, 'Korneel': 18}
+After: {'Jan': 12, 'Joris': 16, 'Korneel': 18}
+~~~
+
+### What if the key doesn't exist?
+
+We have now seen how to delete an entry....  
+What if you retrieve a value with a **non-existent key** like the one below?
+
+~~~python
+student_points = {
+  “John": 12,
+  “Pete": 15,
+  “Joris": 16,
+  “Korneel": 18
+}
+
+print(student_points[“Hans”])
+~~~
+
+As you can see in the trace, an error will be raised in this case.  
+
+~~~bash
+$python3 dicationary_demo.py
+Traceback (most recent call last):
+  File “dicationary_demo.py”, line 8, in <module>
+    print(student_points[“Hans”])
+KeyError: 'Hans'
+~~~
+
+Python dictionaries require you to pass correct keys, if you don't do this it will return an error.  
+How can you avoid this?
+
+### Check if an entry exists within the dictionary
+
+To avoid such situations you have 2 options.  
+Either you catch this error via a **try-except construct**
+
+~~~python
+student_points = {
+  “John": 12,
+  “Pete": 15,
+  “Joris": 16,
+  “Korneel": 18
+}
+
+search_key = “Hans”
+
+try:
+    print(student_points[“Hans”])
+except KeyError:
+    print(search_key + “ does not exist”)
+~~~
+
+...resulting in...
+
+~~~bash
+$ python3 dicationary_demo.py
+Hans does not exist
+~~~
+
+Either **avoid** this **error** by using the **in operator**
+
+~~~python
+student_points = {
+  “John": 12,
+  “Pete": 15,
+  “Joris": 16,
+  “Korneel": 18
+}
+
+search_key = “Hans”
+
+If search_key in student_points:
+    print(student_points[“Hans”])
+else:
+    print(search_key + “ does not exist”)
+~~~
+
+...with the same result...
+
+~~~bash
+$python3 dictionary_demo.py
+Hans does not exist
+~~~
+
+Which one should you use now?  
+The **in operator** in this case is the **preferred solution**, it is clearer here what the intent is in the program.  
+
+This is a general rule in working with exceptions by the way, you are **really** trying to **prevent** rather than **heal**.
+You try to avoid using exceptions if there is a way to check this in advance.  
+
+Exceptions should only be used if you have no way to handle an “exeptional situation” (also have exceptions in some cases ).
+
+## Set
+
+~~~python
+a = {1, 2, 3, 4, 5}
+b = {4, 5, 6, 7, 8}
+
+print("a | b =", a | b)  # union
+print("a & b =", a & b)  # intersection
+print("a - b =", a - b)  # difference
+
+# > a | b = {1, 2, 3, 4, 5, 6, 7, 8}
+# > a & b = {4, 5}
+# > a - b = {1, 2, 3}
+~~~
+
+## Tuples
+
+Tuples in Python are the **equvalent** of an **immutable List** .
+
+In Java an immutable list is actually a list with the same operations.  
+Basically it will throw an java.lang.UnsupportedOperationException in case you try to modify it...
+
+~~~java
+import java.util.Collections;
+import java.util.List;
+
+public class Hello {
+
+ public static void main(String[] args) {
+        List<String> immutableList = List.of("hello", "world") 
+        // or Collections.unmodifiableList(List.of("hello", "world")); if you want to be sure
+        System.out.println(immutableList.get(0));
+        System.out.println(immutableList.get(1));
+    }
+}
+~~~
+
+In Python this is different type, you initialize this by using () in stead of []
+
+~~~python
+a_tuple = ("hello", "world")
+print(a_tuple[0])
+print(a_tuple[1])
+~~~
+
+As a list a tuple keeps its original ordering and can contain multiple datatypes.  
+
+
+### Collection destructuring/unpacking
+
+Tuples are often used in combination with collection destructuring
+
+~~~python
+first, last = ("hello", "world")
+print(first)
+print(last)
 ~~~
 
 ### Enumerate
@@ -1728,51 +2191,6 @@ student 3 heeft 8 punten
 student 4 heeft 9 punten
 ~~~
 
-### Tuple
-
-### Set
-
-~~~python
-a = {1, 2, 3, 4, 5}
-b = {4, 5, 6, 7, 8}
-
-print("a | b =", a | b)  # union
-print("a & b =", a & b)  # intersection
-print("a - b =", a - b)  # difference
-
-# > a | b = {1, 2, 3, 4, 5, 6, 7, 8}
-# > a & b = {4, 5}
-# > a - b = {1, 2, 3}
-~~~
-
-### Dictionary
-
-In Java you have the Map-datatype with a couple of implementations you can choose from dependent on performance-characteristics.
-
-~~~python
-grades = {
-    "Jan": 15,
-    "Piet": 16,
-    "Joris": 8,
-    "Korneel": 9
-}
-
-grades = dict(Jan: 15, Piet: 16, Joris: 8, Korneel: 9)
-
-
-grades["Jan"]
-grades["Piet"] = 5 
-grades["Joris"] = 4
-
-# remove an element (will raise an error if the key does not exist)
-if "math" in grades:
-    del grades["math"]
-
-grades.keys()              # get all the keys as a list
-grades.values()            # get all the values as a list
-~~~
-
-
 ### Named tuple
 
 ~~~python
@@ -1784,6 +2202,7 @@ a_student = Student('Bart', '49', '2541997')
 print(f"The Student age using index is {a_student[1]}: ")
 print(f"The Student name using keyname is {a_student.name}: ")
 ~~~
+
 
 ## Objects and classes
 
