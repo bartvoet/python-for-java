@@ -7,7 +7,7 @@
 Guido van Rossum invented Python in the **late 1980s**. 
 The **first** publicly available version of Python was **0.9.0**, which was released in **1991**. 
 
-Van Rossum’s work on Python was an important contribution to software development and technology in general. 
+Van Rossum’s **work** on **Python** was an important contribution to software development and technology in general. 
 Today, Python is one of the most commonly used programming languages.
 
 Python was heavily influenced by the ABC programming language. Guido van Rossum invented Python after working with ABC for a number of years. He found some issues with ABC and things he didn’t like, so he decided to come up with an alternative.
@@ -18,34 +18,85 @@ Python was heavily influenced by the ABC programming language. Guido van Rossum 
 
 ### Community driven
 
-Today, Python is among the world’s most popular and commonly used programming languages. In comparison, ABC is rarely used.
+Today, Python is among the world’s most popular and commonly used programming languages.
 
-No one really owns Python per se because it's an open-source programming language (although Guido Van Rossum is working for Microsoft nowadays). 
-The Python Software Foundation (PSF) holds the intellectual property rights for the language.
+**No one** really owns **Python** per se because it's an open-source programming language (although Guido Van Rossum is working for Microsoft nowadays). 
 
-A non-profit organization, the PSF was founded in March 2001 and lists its aims as promoting and advancing Python.
-Its ease of use, versatility, and flexibility make it ideal for a broad variety of tasks.
+The **Python Software Foundation** (PSF) holds the intellectual property rights for the language.
+This non-profit organization was founded in March 2001 and lists its aims as promoting and advancing Python.
+
 
 ### Why should you learn Python (as a Java-dev)
 
-* It's always interesting to learn a new language, makes you a better coder...
-* It's very easy to learn
-* Cross-Platform and Open Source
-* An enormous community-coverage, specifically in the not typically web-app topics
-  * Data Science ()
-  * Robotics ROS2
-* Carrer, check https://www.tiobe.com/tiobe-index/, nowadays it's considered the most popular language
-* A wide range of topics
+* Its ease of use, **versatility**, and **flexibility** make it ideal for a broad variety of tasks.
+* It's always interesting to **learn** a new **language**, makes you a better coder...
+* It's very **easy to learn**
+* **Cross-Platform** and Open Source
+* Supports different programming paradigms (Procedural, OO, Functional, ...)
+* An enormous **community-coverage**, specifically in the not typically web-app topics
   * Data Science (pandas, matplotlib, numpy)
   * AI and Machine Learning (scikitlearn, tensorflow)
   * Scripting and Automation (cross-platform alternative to Bash and Powershell)
   * Computer Graphics, OpenCV
   * ...
+* **Carreer-opportunities**, check https://www.tiobe.com/tiobe-index/, nowadays it's considered the most popular language
+* ...
 
-### Objectives 
+### Objectives
 
-* Give a quick overview of why and when it's interesting to use Python
-* From Java to Python
+The concept of this course and presentation is simple, provide a minimum but sufficient knowledge on Python toward Java-dev.  
+
+In this course we will cover what I normally teach in about 8 weeks to novel programmers:
+
+* Language basics (variables, conditions, loops, ...)
+* REPL
+* Collections (lists, dictionaries, sets, tuples)
+* Input/Output
+* OOP
+* Functional programming
+
+Pay attention, is just to set you up, a lot of the exiting stuff is not covered but it should provide you sufficient basics to read and write simple Python-code
+
+### Installation
+
+#### Linux
+
+Most Linux-distro's include **Python by default** as it is used for a lot of applications in GNU/Linux.  
+In case **not** **installed** you can use your **package-manager** in order to install Python.
+
+#### Microsoft Windows
+
+For Microsoft install throug https://www.python.org/downloads/ or the Microsoft store
+
+#### Mac
+
+The preferred way of installing in to Mac is through the brew-package manager
+
+~~~
+% brew install python
+~~~
+
+### Testing the installation
+
+**Step 1**: write a file with the content:
+
+~~~python
+print("Hello World")
+~~~
+
+And save it as hello.python
+
+**Step 2**: Navigate to the directory where the file is located on the command line
+
+**Step 3**: Run the script by passing the file to the Python-interpreter
+
+~~~bash
+$ python3 hello.python
+Hello World
+$
+~~~
+
+Depending on the installation (on Windows) you might need to replace python3 with python or py...
 
 ## Getting started with a "Hello World"
 
