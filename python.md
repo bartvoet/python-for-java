@@ -42,9 +42,18 @@ This non-profit organization was founded in March 2001 and lists its aims as pro
 * **Carreer-opportunities**, check https://www.tiobe.com/tiobe-index/, nowadays it's considered the most popular language
 * ...
 
-### Objectives
+### Approach and objectives
 
 The concept of this course and presentation is simple, provide a minimum but sufficient knowledge on Python toward Java-dev.  
+
+Basically it's inspired on one of my courses I teach at UCCL, the content can be find at [github](https://github.com/bartvoet/pythoncourse).
+
+Basically I adapted the course for this presentation:
+
+* Removed the code-teaching for novel programmers
+* Minimized to an introduction (given in the 1st quarter)
+* Translated to English
+* Enriched with Java-samples
 
 In this course we will cover what I normally teach in about 8 weeks to novel programmers:
 
