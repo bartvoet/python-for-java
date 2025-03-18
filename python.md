@@ -1,6 +1,48 @@
 # From Python to Java
 
-Goal: 
+## Intro
+
+### Some history
+
+Guido van Rossum invented Python in the **late 1980s**. 
+The **first** publicly available version of Python was **0.9.0**, which was released in **1991**. 
+
+Van Rossum’s work on Python was an important contribution to software development and technology in general. 
+Today, Python is one of the most commonly used programming languages.
+
+Python was heavily influenced by the ABC programming language. Guido van Rossum invented Python after working with ABC for a number of years. He found some issues with ABC and things he didn’t like, so he decided to come up with an alternative.
+
+> Java was designed by James Gosling at Sun Microsystems. 
+> It was released in May 1995 as a core component of Sun's Java platform. 
+> The original and reference implementation Java compilers, virtual machines, and class libraries were released by Sun under proprietary licenses.
+
+### Community driven
+
+Today, Python is among the world’s most popular and commonly used programming languages. In comparison, ABC is rarely used.
+
+No one really owns Python per se because it's an open-source programming language (although Guido Van Rossum is working for Microsoft nowadays). 
+The Python Software Foundation (PSF) holds the intellectual property rights for the language.
+
+A non-profit organization, the PSF was founded in March 2001 and lists its aims as promoting and advancing Python.
+Its ease of use, versatility, and flexibility make it ideal for a broad variety of tasks.
+
+### Why should you learn Python (as a Java-dev)
+
+* It's always interesting to learn a new language, makes you a better coder...
+* It's very easy to learn
+* Cross-Platform and Open Source
+* An enormous community-coverage, specifically in the not typically web-app topics
+  * Data Science ()
+  * Robotics ROS2
+* Carrer, check https://www.tiobe.com/tiobe-index/, nowadays it's considered the most popular language
+* A wide range of topics
+  * Data Science (pandas, matplotlib, numpy)
+  * AI and Machine Learning (scikitlearn, tensorflow)
+  * Scripting and Automation (cross-platform alternative to Bash and Powershell)
+  * Computer Graphics, OpenCV
+  * ...
+
+### Objectives 
 
 * Give a quick overview of why and when it's interesting to use Python
 * From Java to Python
